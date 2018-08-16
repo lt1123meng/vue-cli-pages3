@@ -10,7 +10,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
-var pages = utils.getEntry('./src/pages/*/index.html');
+var pages = utils.getEntry('./src/modules/*/index.html');
 
 const env = process.env.NODE_ENV === 'testing'
   ? require('../config/test.env')
@@ -65,7 +65,7 @@ const webpackConfig = merge(baseWebpackConfig, {
     // see https://github.com/ampedandwired/html-webpack-plugin
     // new HtmlWebpackPlugin({
     //   filename: process.env.NODE_ENV === 'testing'
-    //     ? './src/pages/first/index.html'
+    //     ? './src/modules/first/index.html'
     //     : config.build.index,
     //   template: 'index.html',
     //   inject: true,
