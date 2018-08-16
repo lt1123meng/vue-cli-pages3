@@ -3,9 +3,29 @@ const path = require('path')
 const utils = require('./utils')
 const config = require('../config')
 const vueLoaderConfig = require('./vue-loader.conf')
-
-function resolve (dir) {
+const glob = require('glob')
+var entries = getEntry('./src/pages/*/index.js')
+console.log(entries)
+function resolve(dir) {
   return path.join(__dirname, '..', dir)
+}
+
+function getEntry(globPath){
+  var entries = {}, basename, tmp, pathname;
+  glob.sync(globPath).forEach(function (entry) {
+    basename = path.basename(entry, path.extname(entry));
+    //过滤非入口文件的vuex和routers.js
+    if(basename.indexOf('routers') !== -1 || entry.indexOf('vuex/') !== -1) return;
+    // 原路径：‘./src/module/convphoto/index.js’
+    // 分解后：[news,list,index.js]
+    if((entry.indexOf('/demo/') == -1)){
+      tmp = entry.split('/').splice(-2);
+      // * 输出js和html的路径
+      pathname =  tmp.slice(0, 1).join('/') + '/' + basename;
+      entries[pathname] = entry;
+    }
+  });
+  return entries;
 }
 
 const createLintingRule = () => ({
@@ -21,9 +41,7 @@ const createLintingRule = () => ({
 
 module.exports = {
   context: path.resolve(__dirname, '../'),
-  entry: {
-    app: './src/main.js'
-  },
+  entry: entries,
   output: {
     path: config.build.assetsRoot,
     filename: '[name].js',

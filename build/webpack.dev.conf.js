@@ -12,6 +12,7 @@ const portfinder = require('portfinder')
 
 const HOST = process.env.HOST
 const PORT = process.env.PORT && Number(process.env.PORT)
+var pages = utils.getEntry('./src/pages/*/index.html');
 
 const devWebpackConfig = merge(baseWebpackConfig, {
   module: {
@@ -52,11 +53,6 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     new webpack.NamedModulesPlugin(), // HMR shows correct file names in console on update.
     new webpack.NoEmitOnErrorsPlugin(),
     // https://github.com/ampedandwired/html-webpack-plugin
-    new HtmlWebpackPlugin({
-      filename: 'index.html',
-      template: 'index.html',
-      inject: true
-    }),
     // copy custom static assets
     new CopyWebpackPlugin([
       {
@@ -67,7 +63,20 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     ])
   ]
 })
-
+for (var pathname in pages) {
+  // 配置生成的html文件，定义路径等
+  var conf = {
+    filename: pathname + '.html',
+    template: pages[pathname],   // 模板路径
+    inject: true              // js插入位置
+  };
+  console.log(conf)
+  if (pathname in devWebpackConfig.entry) {
+    conf.chunks = ['static/common/vendors', pathname, 'manifest'];
+    conf.hash = true;
+  }
+  devWebpackConfig.plugins.push(new HtmlWebpackPlugin(conf));
+}
 module.exports = new Promise((resolve, reject) => {
   portfinder.basePort = process.env.PORT || config.dev.port
   portfinder.getPort((err, port) => {
