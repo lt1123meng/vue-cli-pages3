@@ -3,8 +3,10 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import '../../stylus/reset.styl'
 
 Vue.config.productionTip = false
+import {Toast} from 'mint-ui'
 
 /* eslint-disable no-new */
 new Vue({
