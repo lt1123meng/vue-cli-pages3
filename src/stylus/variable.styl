@@ -1,0 +1,146 @@
+$pc-width = 1200px
+//侧边栏宽度
+$slider-width = 280px
+//项目主颜色
+$common-color = #3BD6BD
+//红色(置顶...)
+$red-color = #FD5F5F
+//浅灰色(副标题)
+$sub-color = #999999
+// 橙色(悬赏)
+$orange-color = #F89D02
+//weight
+$normal-weight = 400
+$bold-weight = 700
+//头部导航
+nav-wrapper() {
+  .nav-wrapper {
+    display flex
+    flex 1
+    justify-content center
+    font-size 0
+    .box-wrapper {
+      position relative
+      padding 0 20px
+      height inherit
+      line-height inherit
+      text-align center
+      cursor pointer
+      .text {
+        font-size 18px
+        color #666666
+      }
+      .line {
+        display none
+        position absolute
+        bottom 0px
+        left 50%
+        width 30px
+        height 3px
+        background-color $common-color
+        transform translateX(-50%)
+      }
+      &.active {
+        .line {
+          display block
+        }
+        .text {
+          color $common-color
+          font-weight $bold-weight !important
+        }
+      }
+      &:hover {
+        .line {
+          display block
+        }
+        .text {
+          color $common-color
+          font-weight $bold-weight
+        }
+      }
+    }
+  }
+}
+
+//渐变
+transit(type = all, time = .2s, line = ease-in-out) {
+  transition type time line
+}
+
+//多行溢出显示省略号
+ell(row = 1) {
+  display: -webkit-box;
+  display: -moz-box;
+  word-wrap: break-word;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: row; /*显示行数*/
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap
+}
+
+//placeholder颜色
+placeholder(color) {
+  &::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color color
+  }
+  &:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color color
+  }
+  &::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color color
+  }
+  &:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color color
+  }
+}
+
+//扩展点击区域
+extend() {
+  &:before {
+    content ' '
+    position absolute
+    top -5px
+    bottom -5px
+    left -5px
+    right -5px
+  }
+}
+// 侧边栏nav框
+slider-nav-wrapper() {
+  .nav {
+    display block
+    margin-bottom 10px
+    padding 0 10px
+    height 50px
+    line-height 50px
+    font-size 0
+    border-radius 4px
+    .icon {
+      display inline-block
+      margin-right 16px
+      width 30px
+      height 30px
+      vertical-align middle
+    }
+    .text {
+      vertical-align middle
+      font-size 16px
+      color #333
+    }
+    &:hover {
+      .text {
+        color $common-color
+      }
+    }
+    &.active {
+      background-color #F2F2F2
+      .text {
+        color #333
+      }
+    }
+  }
+}
+

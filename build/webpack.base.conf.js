@@ -5,7 +5,6 @@ const config = require('../config')
 const vueLoaderConfig = require('./vue-loader.conf')
 const glob = require('glob')
 var entries = getEntry('./src/modules/*/index.js')
-console.log(entries)
 function resolve(dir) {
   return path.join(__dirname, '..', dir)
 }

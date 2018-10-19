@@ -70,7 +70,6 @@ for (var pathname in pages) {
     template: pages[pathname],   // 模板路径
     inject: true              // js插入位置
   };
-  console.log(conf)
   if (pathname in devWebpackConfig.entry) {
     conf.chunks = ['static/common/vendors', pathname, 'manifest'];
     conf.hash = true;
