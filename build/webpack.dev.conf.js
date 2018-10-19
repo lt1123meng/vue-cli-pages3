@@ -12,7 +12,7 @@ const portfinder = require('portfinder')
 
 const HOST = process.env.HOST
 const PORT = process.env.PORT && Number(process.env.PORT)
-var pages = utils.getEntry('./src/modules/*/index.html');
+var pages = utils.getEntry('./src/pages/*/index.html');
 
 const devWebpackConfig = merge(baseWebpackConfig, {
   module: {
