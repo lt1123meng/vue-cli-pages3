@@ -1,11 +1,11 @@
 import axios from './axios'
 // 话题列表
-export const TopicList = () => {
+export const TopicList = (type) => {
   return axios(
     'get',
     window.setting.HTTPAPIMobile + 'quan/topic/index',
     {
-      type: 2,
+      type: type,
       status: 0
     }
   ).then((res) => {

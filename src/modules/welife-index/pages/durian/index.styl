@@ -15,44 +15,48 @@
     flex-direction column
     .header-wrapper {
       flex 0 0 176px
+      position: relative;
       font-size 0
-      box-shadow 0 0 20px 0px #ddd
-      .search-wrapper{
+      box-shadow 0 0 20px 0px #eeeeee
+      .search-wrapper {
         height 88px
         padding 14px 30px
         box-sizing border-box
-        .inner-box{
+        .inner-box {
           height 60px
           line-height 60px
           background-color #F2F2F2
           border-radius 60px
-          .icon{
+          .icon {
             margin auto 10px auto 30px
             width 32px
             height 32px
             vertical-align middle
           }
-          .text{
+          .text {
             font-size 28px
             vertical-align middle
             color $sub-color
           }
         }
       }
-      .topic-list{
+      .topic-list {
         display flex
         flex-wrap nowrap
         padding 0 20px
-        .topic{
+        overflow-x scroll
+        .topic {
           position relative
           padding 0 30px
           height 88px
           line-height 62px
-          .text{
-            font-size 32px
+          .text {
+            font-size 28px
             color #999999
+            word-break keep-all
           }
-          .line{
+          .line {
+            display none
             position absolute
             left 50%
             margin-left -18px
@@ -60,13 +64,195 @@
             width 36px
             height 6px
             background-color $common-color
-
+          }
+          &.active {
+            .text {
+              font-size 32px
+              color $common-color
+              font-weight bold
+            }
+            .line {
+              display block
+            }
           }
         }
       }
     }
     .content-wrapper {
       flex 1
+      overflow-y scroll
+      &.post {
+        .essence-wrapper {
+          padding 0 30px
+          .border {
+            padding 40px 0
+            border-bottom 2px dashed #eee
+          }
+          .title-wrapper {
+            display flex
+            .title {
+              flex 1
+              font-size 36px
+              font-weight bold
+              color #333333
+              height 50px
+              line-height 50px
+            }
+            .more {
+              font-size 0
+              text-align right
+              height 50px
+              line-height 50px
+              .text {
+                font-size 24px
+                color #999999
+                vertical-align middle
+              }
+              .icon {
+                width 24px
+                height 24px
+                vertical-align middle
+              }
+            }
+          }
+          .bg-img {
+            position relative
+            margin-top 40px
+            padding-top 35%
+            background-image url("https://image-yp.cdn.haiwaiuni.com/essence.png ")
+            border-radius 12px
+            .wrapper {
+              position absolute
+              bottom 20px
+              right 20px
+              .time {
+                display inline-block
+                margin-left 20px
+                padding 0 20px
+                background: rgba(255, 255, 255, 0.85)
+                height 48px
+                line-height 48px
+                border-radius 48px
+                font-size 20px
+                color #333
+                letter-spacing: -0.48rpx
+              }
+            }
+          }
+          .post-title {
+            margin-top 10px
+            font-size 0
+            ell2(2)
+            .icon {
+              width 44px
+              height 44px
+              margin-right 6px
+              vertical-align middle
+            }
+            .text {
+              font-size 32px
+              color #333333
+              font-weight bold
+              vertical-align middle
+            }
+          }
+        }
+        .loading-wrapper {
+          padding 60px 0
+          text-align center
+          .icon {
+            width 160px
+          }
+        }
+        .deadline {
+          position relative
+          margin 90px auto
+          width 400px
+          text-align center
+          border-top 2px dashed #999
+          .text {
+            position relative
+            display inline-block
+            font-size 32px
+            color #999
+            padding 0 20px
+            top -26px
+            background-color #fff
+          }
+        }
+      }
+      &.topic {
+        padding 0 15px
+        .topic-wrapper {
+          padding 40px 0
+          border-bottom 2px dashed #eeeeee
+          .post-title {
+            position relative
+            font-size 32px
+            color #333333
+            font-weight bold
+          }
+          .tail {
+            position relative
+            display flex
+            .item {
+              padding-left 50px
+              flex 0 0 140px
+              font-size 32px
+              color #999999
+              background-size 40px 40px
+              background-repeat no-repeat
+              background-position left center
+              &.see {
+                background-image url("/static/image/icon/icon-see-line-gray.png")
+              }
+              &.message {
+                background-image url("/static/image/icon/icon-message-line-gray.png")
+              }
+              &.zan {
+                background-image url("/static/image/icon/icon-zan-line-gray.png")
+              }
+            }
+          }
+          &.bg {
+            position relative
+            margin-top 40px
+            padding 120px 30px 26px 30px
+            border-radius 12px
+            border 0
+            overflow hidden
+            background-size cover
+            background-position center center
+            .linear-gradient {
+              position absolute
+              top 0
+              bottom 0
+              left 0
+              right 0
+              background linear-gradient(rgba(51, 51, 51, 0.1) 28%, rgba(51, 51, 51, 0.4) 100%);
+            }
+            .post-title {
+              font-size 32px
+              color #ffffff
+            }
+            .tail {
+              display flex
+              .item {
+                color #ffffff
+                &.see {
+                  background-image url("/static/image/icon/icon-see-line-white.png")
+                }
+                &.message {
+                  background-image url("/static/image/icon/icon-message-line-white.png")
+                }
+                &.zan {
+                  background-image url("/static/image/icon/icon-zan-line-white.png")
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }

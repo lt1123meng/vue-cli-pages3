@@ -6,7 +6,7 @@
           class="banner-slide"
           v-for="(item,key) in indexBannerImg"
           :key="key"
-          :style="'background-image: url('+_getImgUrl(item.img_banner)+')'"
+          :style="'background-image: url('+_getImgUrl(item.img_banner,'0')+')'"
         >
         </swiper-slide>
       </swiper>
@@ -78,7 +78,7 @@
           >
             <div
               class="post-img"
-              :style="'background-image: url('+_getImgUrl(item.cover_img)+')'"
+              :style="'background-image: url('+_getImgUrl(item.cover_img,'0')+')'"
             ></div>
             <p class="title">
               [{{item.country}}]{{item.title}}
@@ -181,8 +181,12 @@
           this.indexUnreadNumber = res.data
         })
       },
-      _getImgUrl(url) {
-        return window.setting.CDNImage + url
+      _getImgUrl(url, large = '0') {
+        if (large + '' === '0') {
+          return window.setting.CDNImage + url
+        } else {
+          return url
+        }
       }
     },
     components: {

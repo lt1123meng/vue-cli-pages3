@@ -11,7 +11,7 @@
           <p class="name">{{data.nickname}}</p>
           <p class="auth">{{data.auth_info}}</p>
         </div>
-        <div class="topic-wrapper">
+        <div class="topic-wrapper" v-if="data.title">
           <img src="/static/image/icon/icon-topic.png" class="icon">
           <span class="text">{{data.title}}</span>
         </div>
@@ -65,7 +65,7 @@
         </div>
       </div>
       <div class="durian-item-tail-wrapper">
-        <div class="time">{{data.last_comment_time}}</div>
+        <div class="time">{{data.last_comment_time?data.last_comment_time:data.create_at}}</div>
         <div class="bun">{{data.num_view}}人浏览</div>
       </div>
     </div>
@@ -305,7 +305,7 @@
           }
         }
       }
-      .durian0item-tail-wrapper {
+      .durian-item-tail-wrapper {
         display flex
         margin-top 20px
         font-size 20px
