@@ -1,21 +1,21 @@
 <template>
   <nav class="uni-footer-wrapper">
-    <div class="box index" :class="{'active':$route.meta.active==='index'}">
+    <div class="box index" @click="goIndex" :class="{'active':$route.meta.active==='index'}">
       <div class="icon-img"></div>
       <p class="text">首页</p>
     </div>
-    <div class="box durian" :class="{'active':$route.meta.active==='durian'}">
+    <div class="box durian" @click="goDurian" :class="{'active':$route.meta.active==='durian'}">
       <div class="icon-img"></div>
       <p class="text">榴莲圈</p>
     </div>
-    <div class="box issue">
+    <div class="box issue" @click="openIssue">
       <div class="icon-img"></div>
     </div>
-    <div class="box shop" :class="{'active':$route.meta.active==='shop'}">
+    <div class="box shop" @click="goShop" :class="{'active':$route.meta.active==='shop'}">
       <div class="icon-img"></div>
       <p class="text">商铺</p>
     </div>
-    <div class="box my" :class="{'active':$route.meta.active==='my'}">
+    <div class="box my" @click="goMine" :class="{'active':$route.meta.active==='my'}">
       <div class="icon-img"></div>
       <p class="text">我的</p>
     </div>
@@ -24,13 +24,29 @@
 
 <script>
   export default {
-    name: 'uni-footer'
+    name: 'uni-footer',
+    methods: {
+      goIndex() {
+        this.$router.push('/index')
+      },
+      goDurian() {
+        this.$router.push('/durian')
+      },
+      openIssue() {
+      },
+      goShop() {
+        this.$router.push('/shop')
+      },
+      goMine() {
+        this.$router.push('/mine')
+      }
+    }
   }
 </script>
 
 <style scoped lang="stylus">
   @import "../../stylus/variable.styl"
-  .uni-footer-wrapper{
+  .uni-footer-wrapper {
     position absolute
     bottom 0
     left 0
@@ -38,12 +54,12 @@
     width 100%
     display flex
     box-shadow 0 0 20px 0px #ddd
-    .box{
+    .box {
       flex 1
       text-align center
       color #999
       font-size 0
-      .icon-img{
+      .icon-img {
         display inline-block
         margin-top 10px
         width 60px
@@ -51,54 +67,54 @@
         background-size cover
         background-position center center
       }
-      .text{
+      .text {
         font-size 20px
       }
-      &.active{
+      &.active {
         color $common-color
       }
-      &.index{
+      &.index {
         .icon-img {
           background-image url("/static/image/menu/footer/home.png")
         }
-        &.active{
+        &.active {
           .icon-img {
             background-image url("/static/image/menu/footer/home-active.png")
           }
         }
       }
-      &.durian{
+      &.durian {
         .icon-img {
           background-image url("/static/image/menu/footer/durian.png")
         }
-        &.active{
+        &.active {
           .icon-img {
             background-image url("/static/image/menu/footer/durian-active.png")
           }
         }
       }
-      &.issue{
+      &.issue {
         .icon-img {
           width 80px
           height 80px
           background-image url("/static/image/menu/footer/issue.png")
         }
       }
-      &.shop{
+      &.shop {
         .icon-img {
           background-image url("/static/image/menu/footer/shop.png")
         }
-        &.active{
+        &.active {
           .icon-img {
             background-image url("/static/image/menu/footer/shop-active.png")
           }
         }
       }
-      &.my{
+      &.my {
         .icon-img {
           background-image url("/static/image/menu/footer/my.png")
         }
-        &.active{
+        &.active {
           .icon-img {
             background-image url("/static/image/menu/footer/my-active.png")
           }

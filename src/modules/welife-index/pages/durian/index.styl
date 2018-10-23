@@ -1,0 +1,72 @@
+@import "../../../../stylus/variable.styl"
+.durian-outer-wrapper {
+  position absolute
+  top 0
+  bottom 0px
+  left 0
+  width 100%
+  .durian-content-wrapper {
+    position absolute
+    top 0
+    bottom 100px
+    left 0
+    width 100%
+    display flex
+    flex-direction column
+    .header-wrapper {
+      flex 0 0 176px
+      font-size 0
+      box-shadow 0 0 20px 0px #ddd
+      .search-wrapper{
+        height 88px
+        padding 14px 30px
+        box-sizing border-box
+        .inner-box{
+          height 60px
+          line-height 60px
+          background-color #F2F2F2
+          border-radius 60px
+          .icon{
+            margin auto 10px auto 30px
+            width 32px
+            height 32px
+            vertical-align middle
+          }
+          .text{
+            font-size 28px
+            vertical-align middle
+            color $sub-color
+          }
+        }
+      }
+      .topic-list{
+        display flex
+        flex-wrap nowrap
+        padding 0 20px
+        .topic{
+          position relative
+          padding 0 30px
+          height 88px
+          line-height 62px
+          .text{
+            font-size 32px
+            color #999999
+          }
+          .line{
+            position absolute
+            left 50%
+            margin-left -18px
+            bottom 20px
+            width 36px
+            height 6px
+            background-color $common-color
+
+          }
+        }
+      }
+    }
+    .content-wrapper {
+      flex 1
+    }
+  }
+}

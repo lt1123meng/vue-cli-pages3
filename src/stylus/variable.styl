@@ -12,73 +12,26 @@ $orange-color = #F89D02
 //weight
 $normal-weight = 400
 $bold-weight = 700
-//头部导航
-nav-wrapper() {
-  .nav-wrapper {
-    display flex
-    flex 1
-    justify-content center
-    font-size 0
-    .box-wrapper {
-      position relative
-      padding 0 20px
-      height inherit
-      line-height inherit
-      text-align center
-      cursor pointer
-      .text {
-        font-size 18px
-        color #666666
-      }
-      .line {
-        display none
-        position absolute
-        bottom 0px
-        left 50%
-        width 30px
-        height 3px
-        background-color $common-color
-        transform translateX(-50%)
-      }
-      &.active {
-        .line {
-          display block
-        }
-        .text {
-          color $common-color
-          font-weight $bold-weight !important
-        }
-      }
-      &:hover {
-        .line {
-          display block
-        }
-        .text {
-          color $common-color
-          font-weight $bold-weight
-        }
-      }
-    }
-  }
-}
-
-//渐变
-transit(type = all, time = .2s, line = ease-in-out) {
-  transition type time line
-}
 
 //多行溢出显示省略号
-ell(row = 1) {
+ell() {
   display: -webkit-box;
   display: -moz-box;
   word-wrap: break-word;
   overflow: hidden;
   text-overflow: ellipsis;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: row; /*显示行数*/
-  overflow:hidden;
-  text-overflow:ellipsis;
   white-space:nowrap
+}
+ell2(row = 2) {
+  display: -webkit-box;
+  display: -moz-box;
+  word-wrap: break-word;
+  word-break: break-all;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: row;
+  -webkit-box-orient: vertical;
 }
 
 //placeholder颜色
@@ -106,41 +59,6 @@ extend() {
     bottom -5px
     left -5px
     right -5px
-  }
-}
-// 侧边栏nav框
-slider-nav-wrapper() {
-  .nav {
-    display block
-    margin-bottom 10px
-    padding 0 10px
-    height 50px
-    line-height 50px
-    font-size 0
-    border-radius 4px
-    .icon {
-      display inline-block
-      margin-right 16px
-      width 30px
-      height 30px
-      vertical-align middle
-    }
-    .text {
-      vertical-align middle
-      font-size 16px
-      color #333
-    }
-    &:hover {
-      .text {
-        color $common-color
-      }
-    }
-    &.active {
-      background-color #F2F2F2
-      .text {
-        color #333
-      }
-    }
   }
 }
 

@@ -8,6 +8,20 @@ const Index = resolve => {
     resolve(require('../pages/index/index.vue'))
   })
 }
+const Durian = resolve => {
+  // require.ensure 是 Webpack 的特殊语法，用来设置 code-split point
+  // （代码分块）
+  require.ensure(['../pages/durian/index.vue'], () => {
+    resolve(require('../pages/durian/index.vue'))
+  })
+}
+const Shop = resolve => {
+  // require.ensure 是 Webpack 的特殊语法，用来设置 code-split point
+  // （代码分块）
+  require.ensure(['../pages/shop/index.vue'], () => {
+    resolve(require('../pages/shop/index.vue'))
+  })
+}
 Vue.use(Router)
 
 export default new Router({
@@ -23,6 +37,22 @@ export default new Router({
         active: 'index'
       },
       component: Index
+    },
+    {
+      path: '/durian',
+      name: 'durian',
+      meta: {
+        active: 'durian'
+      },
+      component: Durian
+    },
+    {
+      path: '/shop',
+      name: 'shop',
+      meta: {
+        active: 'shop'
+      },
+      component: Shop
     }
   ]
 })

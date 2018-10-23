@@ -1,0 +1,207 @@
+@import "../../../../stylus/variable.styl"
+.index-outer-wrapper {
+  position absolute
+  top 0
+  bottom 0px
+  left 0
+  width 100%
+  .index-content-wrapper {
+    position absolute
+    top 0
+    bottom 100px
+    left 0
+    width 100%
+    overflow scroll
+    .banner-wrapper {
+      height 228px
+      .banner-slide {
+        background-size cover
+        background-position center center
+      }
+    }
+    .notice-wrapper {
+      position relative
+      z-index 2
+      margin-top -28px
+      padding 0 30px
+      height 66px
+      line-height 66px
+      background-color rgb(255, 247, 229)
+      display flex
+      border-top-left-radius 16px
+      border-top-right-radius 16px
+      .icon-wrapper {
+        flex 0 0 50px
+        font-size 0
+        .icon {
+          width 40px
+          height 40px
+          vertical-align middle
+        }
+      }
+      .list-wrapper {
+        flex 1
+        .item {
+          display flex
+          color #FFB400
+          .left {
+            flex 1
+            font-size 24px
+          }
+          .right {
+            flex 0 0 160px
+            font-size 0
+            text-align right
+            .text {
+              font-size 24px
+              vertical-align middle
+            }
+            .icon {
+              vertical-align middle
+              width 40px
+              height 40px
+              margin-left 10px
+            }
+          }
+        }
+      }
+    }
+    .menu-wrapper {
+      position relative
+      padding 10px 20px 100px 20px
+      background-image url("/static/image/bg/index-menu-bg.png")
+      background-size contain
+      background-repeat no-repeat
+      background-position center bottom
+      background-color #ffffff
+      .wrapper {
+        display flex
+        flex-wrap wrap
+        height 130px
+        transition height .3s
+        overflow hidden
+        .item-box {
+          flex 0 0 20%
+          font-size 0
+          text-align center
+          .icon {
+            margin-top 20px
+            width 80px
+            height 80px
+          }
+          .text {
+            font-size 24px
+            color #666666
+          }
+        }
+      }
+      .tail-box {
+        position absolute
+        bottom 30px
+        left 50%
+        transform translateX(-50%)
+        height 40px
+        line-height 40px
+        .text {
+          font-size 20px
+          color #333
+          vertical-align middle
+        }
+        .icon {
+          margin-left 6px
+          vertical-align middle
+          width 20px
+          height 20px
+          transform rotate(180deg)
+          transition transform .3s
+        }
+      }
+      &.spread {
+        .wrapper {
+          height 266px
+        }
+        .tail-box {
+          .icon {
+            transform rotate(0deg)
+          }
+        }
+      }
+    }
+    .hot-wrapper {
+      position relative
+      z-index 12
+      margin-top -20px
+      padding-bottom 30px
+      background-color #ffffff
+      .title-wrapper {
+        display flex
+        padding 0 32px
+        .left {
+          flex 1
+          font-size 36px
+          font-weight bold
+        }
+        .right {
+          text-align right
+          font-size 24px
+          color #999999
+        }
+      }
+      .content-wrapper {
+        display flex
+        margin-top 30px
+        padding 0 32px
+        flex-wrap nowrap
+        overflow-x scroll
+        .item-wrapper {
+          flex 0 0 320px
+          margin-right 20px
+          font-size 0
+          .post-img {
+            width 320px
+            height 180px
+            border-radius 12px
+          }
+          .title {
+            ell()
+            margin-top 16px
+            font-size 28px
+            color #333333
+          }
+          .sub {
+            margin-top 6px
+            font-size 24px
+            color #999999
+          }
+        }
+      }
+    }
+    .durian-wrapper {
+      background-color #f3f3f3
+      padding-top 20px
+      .title-wrapper {
+        display flex
+        padding 20px 32px
+        background-color #ffffff
+        .left {
+          flex 1
+          font-size 36px
+          font-weight bold
+        }
+        .right {
+          text-align right
+          font-size 24px
+          color #999999
+        }
+      }
+      .more-wrapper{
+        height 120px
+        line-height 100px
+        text-align center
+        color $common-color
+        font-size 30px
+        background-color #ffffff
+      }
+    }
+  }
+}

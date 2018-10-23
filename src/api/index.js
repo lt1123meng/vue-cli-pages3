@@ -26,7 +26,7 @@ export const IndexNotice = () => {
   })
 }
 // 首页热门消息
-export const IndexNotice = () => {
+export const IndexHot = () => {
   return axios(
     'get',
     window.setting.HTTPAPIMobile + 'quan/cms/index',
@@ -50,16 +50,15 @@ export const IndexDurianList = () => {
   })
 }
 // 未读数
-export const IndexDurianList = () => {
+export const IndexUnreadNumber = () => {
   return axios(
     'get',
-    window.setting.HTTPAPIMobile + 'quan/post/first-post',
+    window.setting.HTTPAPIMobile + 'system/push/unread-number',
     {
-      type: h5_user
+      type: 'h5_user'
     }
   ).then((res) => {
     res = res.data
     return Promise.resolve(res)
   })
 }
-
