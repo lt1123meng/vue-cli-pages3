@@ -1,1 +1,185 @@
 @import "../../../../stylus/variable.styl"
+.shop-outer-wrapper {
+  position absolute
+  top 0
+  bottom 0px
+  left 0
+  width 100%
+  .shop-content-wrapper {
+    position absolute
+    top 0
+    bottom 100px
+    left 0
+    width 100%
+    display flex
+    flex-direction column
+    .header-wrapper {
+      flex 0 0 88px
+      position: relative;
+      font-size 0
+      box-shadow 0 0 20px 0px #eeeeee
+      .search-wrapper {
+        height 88px
+        padding 14px 30px
+        box-sizing border-box
+        .inner-box {
+          height 60px
+          line-height 60px
+          background-color #F2F2F2
+          border-radius 60px
+          .icon {
+            margin auto 10px auto 30px
+            width 32px
+            height 32px
+            vertical-align middle
+          }
+          .text {
+            font-size 28px
+            vertical-align middle
+            color $sub-color
+          }
+        }
+      }
+      .topic-list {
+        display flex
+        flex-wrap nowrap
+        padding 0 20px
+        overflow-x scroll
+        .topic {
+          position relative
+          padding 0 30px
+          height 88px
+          line-height 62px
+          .text {
+            font-size 28px
+            color #999999
+            word-break keep-all
+          }
+          .line {
+            display none
+            position absolute
+            left 50%
+            margin-left -18px
+            bottom 20px
+            width 36px
+            height 6px
+            background-color $common-color
+          }
+          &.active {
+            .text {
+              font-size 32px
+              color $common-color
+              font-weight bold
+            }
+            .line {
+              display block
+            }
+          }
+        }
+      }
+    }
+    .content-wrapper{
+      flex 1
+      overflow-y scroll
+      .ad-wrapper{
+        display flex
+        height 98px
+        padding 5px 0
+        box-sizing border-box
+        background rgba(255, 180, 0, 0.1)
+        font-size 0
+        .icon-wrapper{
+          flex 0 0 108px
+          width 108px
+          background-color #fff
+          height 88px
+          padding 10px 30px
+          word-break break-word
+          box-sizing border-box
+          .text{
+            font-size 24px
+            color #fe7a7a
+            font-weight bold
+          }
+        }
+        .list-wrapper{
+          flex 1
+        }
+        .button-wrapper{
+          flex 0 0 190px
+          .button{
+            margin-top 16px
+            width 160px
+            height 56px
+            line-height 56px
+            background-color #FFB400
+            color #fff
+            border-radius 56px
+            font-size 24px
+            font-weight bold
+          }
+        }
+      }
+      .shop-type-wrapper{
+        padding 0 26px
+        display flex
+        flex-wrap wrap
+        box-shadow 0 0 20px 0px #eeeeee
+        .item-wrapper{
+          flex 0 0 174px
+          padding 24px 0
+          height 172px
+          border-left 1px solid #fff
+          border-right 1px solid #fff
+          box-sizing border-box
+          text-align center
+          .icon{
+            width 86px
+            height 86px
+          }
+          .text{
+            font-size 24px
+            color #999999
+          }
+        }
+      }
+      .choose-condition-wrapper {
+        display flex
+        padding 0 20px
+        overflow-x scroll
+        .item-wrapper {
+          flex 0 0 33.3%
+          position relative
+          height 112px
+          line-height 100px
+          text-align center
+          .text {
+            font-size 28px
+            color #999999
+            word-break keep-all
+          }
+          .line {
+            display none
+            position absolute
+            left 50%
+            margin-left -18px
+            bottom 20px
+            width 36px
+            height 6px
+            background-color $common-color
+          }
+          &.active {
+            .text {
+              font-size 32px
+              color $common-color
+              font-weight bold
+            }
+            .line {
+              display block
+            }
+          }
+        }
+      }
+    }
+  }
+}
