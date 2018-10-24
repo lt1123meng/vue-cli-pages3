@@ -1,0 +1,161 @@
+<template>
+  <div class="shop-item-wrapper">
+    <div class="shop-item-box">
+      <div class="avatar-wrapper">
+        <img class="avatar" :src="_getImg(data.logo)" alt="">
+        <img class="tag" v-if="data.is_licence" src="/static/image/icon/user-v.png">
+      </div>
+      <div class="info-wrapper">
+        <div class="name-money">
+          <div class="name">
+            {{data.name}}
+          </div>
+          <div class="money">
+            人均消费£{{data.pita_price}}
+          </div>
+        </div>
+        <div class="info-tel">
+          <div class="info">
+            <p class="text">人气：{{data.num_view}}</p>
+            <p class="text">地址：{{data.address}}</p>
+          </div>
+          <div class="tel">
+            <img src="/static/image/icon/icon-phone.png" class="icon">
+          </div>
+        </div>
+        <div class="tag-wrapper">
+          <div class="tag">{{data.type_name}}</div>
+          <div class="tag">{{data.city_name}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+  export default {
+    name: 'shop-item',
+    props: {
+      data: {
+        default: {}
+      }
+    },
+    data() {
+      return {
+        post: ''
+      }
+    },
+    mounted() {
+
+    },
+    methods: {
+      _getImg(url) {
+        return window.setting.CDNImage + url
+      }
+    }
+  }
+</script>
+
+<style scoped lang="stylus">
+  @import "../../stylus/variable.styl"
+  .shop-item-wrapper {
+    padding 0 30px
+    background-color #fff
+    .shop-item-box {
+      padding 30px 0
+      display flex
+      .avatar-wrapper {
+        position relative
+        flex 0 0 120px
+        .avatar {
+          width 120px
+          height 120px
+          border-radius 50%
+        }
+        .tag {
+          position absolute
+          top 76px
+          right -6px
+          width 50px
+          height 50px
+        }
+      }
+      .info-wrapper {
+        flex 1
+        padding-left 24px
+        .name-money {
+          display flex
+          height 44px
+          line-height 44px
+          .name {
+            flex 1
+            font-size 32px
+            color #333333
+            font-weight bold
+          }
+          .money {
+            font-size 24px
+            color #999999
+          }
+        }
+        .info-tel {
+          display flex
+          margin-top 6px
+          .info {
+            flex 1
+            .text {
+              font-size 24px
+              color #999999
+              ell2(1)
+            }
+          }
+          .tel {
+            position relative
+            top 20px
+            flex 0 0 80px
+            text-align right
+            margin-top 16px
+            height 34px
+            border-left 2px solid #eeeeee
+            .icon {
+              margin-top -16px
+              width 60px
+              height 60px
+            }
+          }
+        }
+        .tag-wrapper {
+          margin-top 14px
+          .tag {
+            display inline-block
+            color #F5A623
+            font-size 24px
+            height 42px
+            line-height 42px
+            border 2px solid #F5A623
+            padding 0 20px
+            border-radius 42px
+            margin-right 20px
+          }
+        }
+      }
+      .topic-wrapper {
+        text-align right
+        font-size 0
+        height 70px
+        line-height 70px
+        .icon {
+          vertical-align middle
+          width 40px
+          height 40px
+          margin-right 4px
+        }
+        .text {
+          font-size 24px
+          vertical-align middle
+          color $common-color
+        }
+      }
+    }
+  }
+</style>

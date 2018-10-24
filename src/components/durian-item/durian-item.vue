@@ -74,7 +74,7 @@
 
 <script>
   export default {
-    name: 'durian-item',
+    name: 'shop-item',
     props: {
       data: {
         default: {}

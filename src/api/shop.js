@@ -20,17 +20,10 @@ export const ShopAD = () => {
   })
 }
 // 商铺列表
-export const ShopList = () => {
+export const ShopList = (params) => {
   return axios(
     'get',
-    window.setting.HTTPAPIMobile + 'quan/shop/list', {
-      page: 1,
-      page_size: 10,
-      city_id: 0,
-      type_id: '',
-      sort: 'last',
-      keywords: ''
-    }
+    window.setting.HTTPAPIMobile + 'quan/shop/list', params
   ).then((res) => {
     res = res.data
     return Promise.resolve(res)

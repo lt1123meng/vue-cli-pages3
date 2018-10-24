@@ -8,16 +8,25 @@
   .durian-content-wrapper {
     position absolute
     top 0
-    bottom 100px
     left 0
+    bottom 100px
     width 100%
     display flex
     flex-direction column
     .header-wrapper {
-      flex 0 0 176px
-      position: relative;
+      position absolute
+      top 0
+      left 0
+      width 100%
+      height 176px
+      z-index 1
       font-size 0
       box-shadow 0 0 20px 0px #eeeeee
+      background-color #ffffff
+      transition transform .2s linear
+      &.navtop {
+        transform translateY(-50%)
+      }
       .search-wrapper {
         height 88px
         padding 14px 30px
@@ -79,7 +88,12 @@
       }
     }
     .content-wrapper {
-      flex 1
+      position absolute
+      top 88px
+      bottom 0px
+      left 0
+      width 100%
+      padding-top 88px
       overflow-y scroll
       &.post {
         .essence-wrapper {

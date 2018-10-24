@@ -1,7 +1,7 @@
 <template>
   <div class="durian-outer-wrapper">
     <div class="durian-content-wrapper">
-      <div class="header-wrapper">
+      <div class="header-wrapper" :class="{'navtop':navtop}">
         <div class="search-wrapper">
           <div class="inner-box">
             <img class="icon" src="/static/image/icon/icon-search.png">
@@ -109,6 +109,7 @@
     name: 'index',
     data() {
       return {
+        navtop: false,
         activeTopic: '-1',
         topicTitleList: [{
           id: '-1',
@@ -150,6 +151,11 @@
         this._initPostList()
       },
       _scroll(e) {
+        if (e.target.scrollTop > 500) {
+          this.navtop = true
+        } else {
+          this.navtop = false
+        }
         if (e.target.scrollTop + e.target.clientHeight > e.target.children[0].clientHeight - 200) {
           this._initPostList()
         }
