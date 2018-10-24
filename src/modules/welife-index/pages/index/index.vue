@@ -21,7 +21,7 @@
             :key="key"
           >
             <div class="left">{{item.text}}</div>
-            <div class="right">
+            <div class="right" @click="noticeClick(item)">
               <span class="text">{{item.data_type}}</span>
               <img class="icon" src="/static/image/icon/icon-circle-next.png">
             </div>
@@ -30,31 +30,31 @@
       </div>
       <nav class="menu-wrapper" :class="{'spread':menuFold===false}">
         <div class="wrapper">
-          <div class="item-box">
+          <div class="item-box" @click="menuClick('旅游')">
             <img class="icon" src="/static/image/menu/tourism.png">
             <p class="text">旅游</p>
           </div>
-          <div class="item-box">
+          <div class="item-box" @click="menuClick('拼团购')">
             <img class="icon" src="/static/image/menu/shop.png">
             <p class="text">拼团购</p>
           </div>
-          <div class="item-box">
+          <div class="item-box" @click="menuClick('二手')">
             <img class="icon" src="/static/image/menu/second.png">
             <p class="text">二手</p>
           </div>
-          <div class="item-box">
+          <div class="item-box" @click="menuClick('租房')">
             <img class="icon" src="/static/image/menu/rent-home.png">
             <p class="text">租房</p>
           </div>
-          <div class="item-box">
+          <div class="item-box" @click="menuClick('物流')">
             <img class="icon" src="/static/image/menu/logistics.png">
             <p class="text">物流</p>
           </div>
-          <div class="item-box">
+          <div class="item-box" @click="menuClick('专车')">
             <img class="icon" src="/static/image/menu/rent-car.png">
             <p class="text">专车</p>
           </div>
-          <div class="item-box">
+          <div class="item-box" @click="menuClick('最IN海外')">
             <img class="icon" src="/static/image/menu/uni.png">
             <p class="text">最IN海外</p>
           </div>
@@ -68,13 +68,14 @@
       <div class="hot-wrapper">
         <div class="title-wrapper">
           <div class="left">热门精选</div>
-          <div class="right">查看更多 ></div>
+          <div class="right" @click="goHotList">查看更多 ></div>
         </div>
         <div class="content-wrapper">
           <div
             class="item-wrapper"
             v-for="(item,key) in indexHot.list"
             :key="key"
+            @click="goHotListDetail(item)"
           >
             <div
               class="post-img"
@@ -92,7 +93,7 @@
       <div class="durian-wrapper">
         <div class="title-wrapper">
           <div class="left">榴莲圈</div>
-          <div class="right">查看更多 ></div>
+          <div class="right" @click="goDurian">查看更多 ></div>
         </div>
         <div class="content-wrapper">
           <durian-item
@@ -155,6 +156,48 @@
     methods: {
       menuFoldClick() {
         this.menuFold = !this.menuFold
+      },
+      noticeClick(item) {
+        if (item.data_type === '商家入驻') {
+          window.location.href = window.setting.HTTPURL + 'addons/welife_admin/index.html#/adminupload'
+        }
+      },
+      goHotList() {
+        window.location.href = window.setting.HTTPURL + 'addons/welife_cms/index.html#/'
+      },
+      goHotListDetail(item) {
+        window.location.href = window.setting.HTTPURL + 'addons/welife_cms/index.html#/detail/2/' + item.id
+      },
+      goDurian() {
+        window.location.href = window.setting.HTTPURL + 'addons/welife_durian/index.html#/'
+      },
+      menuClick(type) {
+        let _url = ''
+        if (type === '旅游') {
+          _url = window.setting.HTTPURL + 'addons/welife_travel/index.html'
+        } else if (type === '拼团购') {
+          _url = window.setting.HTTPURL + 'app/index.php?i=9&c=entry&do=index&m=welife_familyshop#'
+          let startTime = localStorage.getItem('local_storage_haiwaiuni_at_data_startTime')
+          let endTime = new Date().getTime()
+          // eslint-disable-next-line
+          _at.push('path', {
+            'url': 'welife_familyshop',
+            'referrer': document.referrer,
+            'online_time': endTime - startTime
+          })
+          localStorage.setItem('local_storage_haiwaiuni_at_data_startTime', new Date().getTime())
+        } else if (type === '二手') {
+          _url = window.setting.HTTPURL + 'addons/welife_second/index.html'
+        } else if (type === '租房') {
+          _url = window.setting.HTTPURL + 'addons/welife_rent/index.html'
+        } else if (type === '物流') {
+          _url = window.setting.HTTPURL + 'addons/welife_mine/maneIndex.html#/log'
+        } else if (type === '专车') {
+          _url = window.setting.HTTPURL + 'addons/welife_carRent/index.html'
+        } else if (type === '最IN海外') {
+          _url = window.setting.HTTPURL + 'addons/welife_oversea/index.html'
+        }
+        window.location.href = _url
       },
       _initBanner() {
         IndexBanner().then((res) => {

@@ -3,7 +3,7 @@ import axios from './axios'
 export const PostList = (topic, page) => {
   return axios(
     'get',
-    window.setting.HTTPAPIMobile + 'quan/post/post-list',
+    window.setting.HTTPAPI + 'quan/post/post-list',
     {
       page_index: page,
       page_size: 10,

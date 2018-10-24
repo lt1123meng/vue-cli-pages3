@@ -2,7 +2,7 @@
   <div class="shop-item-wrapper">
     <div class="shop-item-box">
       <div class="avatar-wrapper">
-        <img class="avatar" :src="_getImg(data.logo)" alt="">
+        <div class="avatar" :style="'background-image: url('+_getImg(data.logo)+')'"></div>
         <img class="tag" v-if="data.is_licence" src="/static/image/icon/user-v.png">
       </div>
       <div class="info-wrapper">
@@ -71,6 +71,8 @@
           width 120px
           height 120px
           border-radius 50%
+          background-size cover
+          background-position center
         }
         .tag {
           position absolute

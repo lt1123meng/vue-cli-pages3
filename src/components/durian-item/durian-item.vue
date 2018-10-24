@@ -1,5 +1,5 @@
 <template>
-  <div class="durian-item-wrapper">
+  <div class="durian-item-wrapper" @click="goDurianDetail">
     <div class="durian-item-box">
       <div class="durian-item-head-wrapper">
         <div class="avatar-wrapper">
@@ -11,7 +11,7 @@
           <p class="name">{{data.nickname}}</p>
           <p class="auth">{{data.auth_info}}</p>
         </div>
-        <div class="topic-wrapper" v-if="data.title">
+        <div class="topic-wrapper" v-if="data.title" @click.stop="goTopicDetail">
           <img src="/static/image/icon/icon-topic.png" class="icon">
           <span class="text">{{data.title}}</span>
         </div>
@@ -146,6 +146,12 @@
       }
     },
     methods: {
+      goDurianDetail() {
+        window.location.href = window.setting.HTTPURL + 'addons/welife_durian/index.html#/detail/' + this.data.id
+      },
+      goTopicDetail() {
+        window.location.href = window.setting.HTTPURL + 'addons/welife_durian/index.html#/topic/' + this.data.topic_id
+      },
       _getImg(url) {
         if (this.data.is_large + '' === '0') {
           return window.setting.CDNImage + url
