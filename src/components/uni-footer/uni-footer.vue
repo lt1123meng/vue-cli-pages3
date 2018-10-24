@@ -23,6 +23,8 @@
 </template>
 
 <script>
+  import {MessageBox} from 'mint-ui'
+
   export default {
     name: 'uni-footer',
     methods: {
@@ -33,6 +35,14 @@
         this.$router.push('/durian')
       },
       openIssue() {
+        if (!window.user || window.user.token === '' || !window.user.token) {
+          this.$root.$children[0].loginShow = true
+          return false
+        }
+        if (window.user.status === '1') {
+          MessageBox.alert('您已被禁言，暂时无法操作，请知悉', '')
+          return false
+        }
       },
       goShop() {
         this.$router.push('/shop')

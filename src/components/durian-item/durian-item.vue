@@ -20,6 +20,8 @@
         <div class="wrapper">
           <div class="content-title-wrapper">
             <div class="title" :class="{'price':!(post.img.length!==0&&post.img.length<4)}">
+              <img class="hot" v-if="data.xuanshang===1" src="/static/image/icon/icon-xs.png">
+              <span class="xs" v-if="data.xuanshang===1">悬赏</span>
               <img class="hot" v-if="data.is_essence+''==='1'" src="/static/image/icon/icon_essence.png">
               <img class="hot" v-if="data.have_fire===1" src="/static/image/icon/icon-hot.png">
               <span v-if="data.son&&data.son.city_name" class="city text">{{data.son.city_name}} | </span>
@@ -98,6 +100,12 @@
           if (!text) {
             text = content[i].text
           }
+        }
+      }
+      this.data.xuanshang = 0
+      if (this.data.title === '问答' || this.data.title === '帮帮') {
+        if (this.data.final_price && parseFloat(this.data.final_price) > 0 && this.data.best_comment_id === '0') {
+          this.data.xuanshang = 1
         }
       }
       if (this.data.son) {
@@ -243,12 +251,15 @@
               position relative
               color #151515
               ell2(1)
-              .money-wrapper{
+              font-size 0
+              height 44px
+              line-height 44px
+              .money-wrapper {
                 display none
               }
-              &.price{
+              &.price {
                 padding-right 150px
-                .money-wrapper{
+                .money-wrapper {
                   display block
                   position absolute
                   right 0
@@ -264,6 +275,13 @@
                 vertical-align middle
                 height 40px
                 margin-right 6px
+              }
+              .xs {
+                position relative
+                left -6px
+                color $red-color
+                font-size 28px
+                vertical-align middle
               }
               .city {
                 color #666

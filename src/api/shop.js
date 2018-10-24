@@ -3,7 +3,7 @@ import axios from './axios'
 export const ShopChooseType = () => {
   return axios(
     'get',
-    window.setting.HTTPAPIMobile + 'quan/shop/type-list'
+    window.setting.HTTPAPI + 'quan/shop/type-list'
   ).then((res) => {
     res = res.data
     return Promise.resolve(res)
@@ -13,7 +13,7 @@ export const ShopChooseType = () => {
 export const ShopAD = () => {
   return axios(
     'get',
-    window.setting.HTTPAPIMobile + 'quan/notice/shop'
+    window.setting.HTTPAPI + 'quan/notice/shop'
   ).then((res) => {
     res = res.data
     return Promise.resolve(res)
@@ -23,7 +23,7 @@ export const ShopAD = () => {
 export const ShopList = (params) => {
   return axios(
     'get',
-    window.setting.HTTPAPIMobile + 'quan/shop/list', params
+    window.setting.HTTPAPI + 'quan/shop/list', params
   ).then((res) => {
     res = res.data
     return Promise.resolve(res)

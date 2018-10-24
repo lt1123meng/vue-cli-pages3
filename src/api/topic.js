@@ -3,7 +3,7 @@ import axios from './axios'
 export const TopicList = (type) => {
   return axios(
     'get',
-    window.setting.HTTPAPIMobile + 'quan/topic/index',
+    window.setting.HTTPAPI + 'quan/topic/index',
     {
       type: type,
       status: 0

@@ -91,41 +91,25 @@ table {
 }
 
 //minu-ui
-.mint-toast-text {
-  font-size 16px !important
-}
-
 .mint-msgbox {
-  width 300px !important
-}
+  border-radius 12px !important
+  .mint-msgbox-content {
+    padding: 80px 40px 80px !important;
+    border-bottom: 2px solid #ddd !important;
+    font-size 32px !important
+    .mint-msgbox-message {
+      color #333333 !important
+      font-weight bold !important
+    }
 
-.mint-msgbox-btn {
-  font-size 16px !important
-}
-
-.mint-msgbox-confirm {
-  font-size 16px !important
-  color #ffffff !important
-  background $common-color !important
-}
-
-.mint-msgbox-title {
-  font-size 17px !important
-}
-
-.mint-msgbox-message {
-  line-height 28px !important
-}
-
-//element-ui
-.el-input__inner {
-  height 33px !important
-  border-radius 6px !important
-  border none !important
-}
-
-.el-input__prefix, .el-input__suffix {
-  top -3px !important
+  }
+  .mint-msgbox-btns {
+    height: 80px !important;
+    line-height: 80px !important;
+    .mint-msgbox-confirm {
+      font-size 32px !important
+    }
+  }
 }
 
 //  整屏swiper样式问题
