@@ -1,6 +1,6 @@
 <template>
   <div class="shop-item-wrapper">
-    <div class="shop-item-box">
+    <div class="shop-item-box" @click="goShopDetail">
       <div class="avatar-wrapper">
         <div class="avatar" :style="'background-image: url('+_getImg(data.logo)+')'"></div>
         <img class="tag" v-if="data.is_licence" src="/static/image/icon/user-v.png">
@@ -20,7 +20,7 @@
             <p class="text">地址：{{data.address}}</p>
           </div>
           <div class="tel">
-            <img src="/static/image/icon/icon-phone.png" class="icon">
+            <img @click.stop="tel" src="/static/image/icon/icon-phone.png" class="icon">
           </div>
         </div>
         <div class="tag-wrapper">
@@ -49,6 +49,12 @@
 
     },
     methods: {
+      tel() {
+        window.location.href = 'tel:' + this.data.tel
+      },
+      goShopDetail() {
+        window.location.href = window.setting.HTTPURL + 'addons/welife_food/index.html#/shopingdetail/' + this.data.id
+      },
       _getImg(url) {
         return window.setting.CDNImage + url
       }

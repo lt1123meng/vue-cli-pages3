@@ -14,9 +14,9 @@
   .deadline {
     position relative
     margin 90px auto
-    width 400px
+    width 100%
     text-align center
-    border-top 2px dashed #999
+    border-top 2px solid #cccccc
     .text {
       position relative
       display inline-block

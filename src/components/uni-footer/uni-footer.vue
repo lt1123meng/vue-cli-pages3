@@ -23,15 +23,15 @@
     </nav>
     <div class="issue-outer-wrapper" v-if="issueShow">
       <div class="type-wrapper">
-        <div class="item-wrapper">
+        <div class="item-wrapper" @click="issuePost">
           <img src="/static/image/menu/issue-post.png" class="icon">
           <p class="text">帖子</p>
         </div>
-        <div class="item-wrapper">
+        <div class="item-wrapper" @click="issueSecond">
           <img src="/static/image/menu/issue-second.png" class="icon">
           <p class="text">二手</p>
         </div>
-        <div class="item-wrapper">
+        <div class="item-wrapper" @click="issueRent">
           <img src="/static/image/menu/issue-rent.png" class="icon">
           <p class="text">租房</p>
         </div>
@@ -52,6 +52,15 @@
       }
     },
     methods: {
+      issuePost() {
+        window.location.href = window.setting.HTTPURL + 'addons/welife_durian/index.html??#/release'
+      },
+      issueSecond() {
+        window.location.href = window.setting.HTTPURL + 'addons/welife_second/index.html??#/release'
+      },
+      issueRent() {
+        window.location.href = window.setting.HTTPURL + 'addons/welife_rent/index.html??#/release'
+      },
       goIndex() {
         this.$router.push('/index')
       },
@@ -73,7 +82,11 @@
         this.$router.push('/shop')
       },
       goMine() {
-        this.$router.push('/mine')
+        if (!window.user || window.user.token === '' || !window.user.token) {
+          this.$root.$children[0].loginShow = true
+          return false
+        }
+        window.location.href = window.setting.HTTPURL + 'addons/welife_mine/index.html#/'
       }
     }
   }
@@ -165,6 +178,7 @@
     left 0
     right 0
     background-image url("/static/image/bg/issue.png")
+    background-color #fff
     background-size cover
     background-position center center
     z-index 99

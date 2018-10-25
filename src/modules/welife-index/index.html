@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta id="UIWIDTH" name="viewport" content="width=device-width,initial-scale=1.0">
-  <title>demo1</title>
+  <title>英国由你</title>
   <script src="/static/utils/config.js"></script>
   <script src="/static/analytics/at.js"></script>
   <script src="https://res.wx.qq.com/open/js/jweixin-1.3.2.js"></script>
@@ -35,8 +35,12 @@
   var _token = _GetQueryString("token") || '';
 
   function onready() {
+    if (window.user && window.user.token) {
+      sessionStorage.token = window.user.token
+    }
     return
   }
+
   function errors() {
     return
   }

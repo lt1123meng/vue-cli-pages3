@@ -1,6 +1,13 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
+const City = resolve => {
+  // require.ensure 是 Webpack 的特殊语法，用来设置 code-split point
+  // （代码分块）
+  require.ensure(['../pages/city/city.vue'], () => {
+    resolve(require('../pages/city/city.vue'))
+  })
+}
 const Index = resolve => {
   // require.ensure 是 Webpack 的特殊语法，用来设置 code-split point
   // （代码分块）
@@ -36,7 +43,12 @@ export default new Router({
       meta: {
         active: 'index'
       },
-      component: Index
+      component: Index,
+      children: [{
+        path: 'city',
+        name: 'city',
+        component: City
+      }]
     },
     {
       path: '/durian',
@@ -52,7 +64,12 @@ export default new Router({
       meta: {
         active: 'shop'
       },
-      component: Shop
+      component: Shop,
+      children: [{
+        path: 'city',
+        name: 'city',
+        component: City
+      }]
     }
   ]
 })

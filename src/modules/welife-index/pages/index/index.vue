@@ -1,15 +1,25 @@
 <template>
   <div class="index-outer-wrapper">
     <div class="index-content-wrapper">
-      <swiper v-if="indexBannerImg.length>0" class="banner-wrapper" ref="bannerSwiper" :options="indexBannerOption">
-        <swiper-slide
-          class="banner-slide"
-          v-for="(item,key) in indexBannerImg"
-          :key="key"
-          :style="'background-image: url('+_getImgUrl(item.img_banner,'0')+')'"
-        >
-        </swiper-slide>
-      </swiper>
+      <div class="banner-wrapper">
+        <swiper v-if="indexBannerImg.length>0" class="banner" ref="bannerSwiper" :options="indexBannerOption">
+          <swiper-slide
+            class="banner-slide"
+            v-for="(item,key) in indexBannerImg"
+            :key="key"
+            :style="'background-image: url('+_getImgUrl(item.img_banner,'0')+')'"
+          >
+          </swiper-slide>
+        </swiper>
+        <div class="address" @click="goCity">
+          <span class="text">{{city_name}}</span>
+          <img src="/static/image/icon/icon-solid-triangle-fff.png" class="icon">
+        </div>
+        <div class="message" @click="goMessage">
+          <img src="/static/image/icon/icon-message-line-white.png" class="icon">
+          <span class="num" v-if="indexUnreadNumber!==0">{{indexUnreadNumber}}</span>
+        </div>
+      </div>
       <div class="notice-wrapper">
         <div class="icon-wrapper">
           <img class="icon" src="/static/image/icon/icon-laba.png">
@@ -104,18 +114,20 @@
             :data="item"
           >
           </durian-item>
-          <div class="more-wrapper">
+          <div class="more-wrapper" @click="goDurian">
             点击查看更多 >
           </div>
         </div>
       </div>
     </div>
     <uni-footer></uni-footer>
+    <router-view @cityChange="cityChange"/>
   </div>
 </template>
 
 <script>
   import './index.styl'
+  import {getCookie} from '@/utils/common.js'
   import {IndexBanner, IndexNotice, IndexHot, IndexDurianList, IndexUnreadNumber} from '@/api/index.js'
   import UniFooter from '@/components/uni-footer/uni-footer'
   import DurianItem from '@/components/durian-item/durian-item'
@@ -142,7 +154,7 @@
         menuFold: true,
         indexHot: [],
         indexDurianList: [],
-        indexUnreadNumber: []
+        indexUnreadNumber: 0
 
       }
     },
@@ -152,8 +164,22 @@
       this._initHot()
       this._initDurianList()
       this._initUnreadNumber()
+      this.city_id = getCookie('city_id_food') || 0
+      this.city_name = getCookie('city_name_food') || '英国'
     },
     methods: {
+      goCity() {
+        this.$router.push('/index/city')
+      },
+      cityChange(item) {
+        if (item.name === '英国') {
+          this.city_name = '英国'
+          this.city_id = '0'
+        } else {
+          this.city_id = item.id
+          this.city_name = item.name
+        }
+      },
       menuFoldClick() {
         this.menuFold = !this.menuFold
       },
@@ -169,7 +195,14 @@
         window.location.href = window.setting.HTTPURL + 'addons/welife_cms/index.html#/detail/2/' + item.id
       },
       goDurian() {
-        window.location.href = window.setting.HTTPURL + 'addons/welife_durian/index.html#/'
+        window.location.href = window.setting.HTTPURL + 'addons/welife_mine/index.html#/newslist'
+      },
+      goMessage() {
+        if (!window.user || window.user.token === '' || !window.user.token) {
+          this.$root.$children[0].loginShow = true
+          return false
+        }
+        window.location.href = window.setting.HTTPURL + 'addons/welife_mine/index.html#/newslist'
       },
       menuClick(type) {
         let _url = ''
@@ -220,6 +253,10 @@
         })
       },
       _initUnreadNumber() {
+        if (!window.user || window.user.token === '' || !window.user.token) {
+          this.$root.$children[0].loginShow = true
+          return false
+        }
         IndexUnreadNumber().then((res) => {
           this.indexUnreadNumber = res.data
         })

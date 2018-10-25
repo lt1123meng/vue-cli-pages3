@@ -3,7 +3,7 @@
     <div class="durian-content-wrapper">
       <div class="header-wrapper" :class="{'navtop':navtop}">
         <div class="search-wrapper">
-          <div class="inner-box">
+          <div class="inner-box" @click="search">
             <img class="icon" src="/static/image/icon/icon-search.png">
             <span class="text">搜索关键词</span>
           </div>
@@ -22,7 +22,8 @@
         </div>
       </div>
       <div class="content-wrapper post" v-if="activeTopic!=='-2'" ref="scrollArea">
-        <loading v-if="postList===''"></loading>
+        <loading v-if="postList===''" :flag="postList===''"></loading>
+        <empty v-else-if="postList.length==0"></empty>
         <div v-else>
           <div
             v-for="(item,key) in postList"
@@ -35,11 +36,11 @@
             >
             </durian-item>
             <div class="essence-wrapper" v-if="essence!==''&&key===1">
-              <div class="border">
+              <div class="border" @click="goDurianDetail(essence.id)">
                 <div class="title-wrapper">
                   <div class="title">精华帖</div>
-                  <div class="more">
-                    <span class="text">精华帖</span>
+                  <div class="more" @click.stop="goEssenceList">
+                    <span class="text">查看更多</span>
                     <img src="/static/image/icon/icon-solid-triangle-999.png" class="icon">
                   </div>
                 </div>
@@ -59,9 +60,7 @@
           <div class="loading-wrapper" v-show="flag">
             <img src="/static/image/system/loading-tail.gif" class="icon">
           </div>
-          <div class="deadline" v-if="postFinish">
-            <div class="text">我是有底线的</div>
-          </div>
+          <deadline v-if="postFinish"></deadline>
         </div>
       </div>
       <div class="content-wrapper topic" v-else>
@@ -73,6 +72,7 @@
             v-for="(item,key) in topicList"
             :key="key"
             :style="'background-image: url('+_getImgUrl(item.banner_img)+')'"
+            @click="goTopicDetail(item.id)"
           >
             <div class="linear-gradient"></div>
             <div class="post-title">
@@ -104,6 +104,8 @@
   import UniFooter from '@/components/uni-footer/uni-footer'
   import DurianItem from '@/components/durian-item/durian-item'
   import Loading from '@/components/loading/loading'
+  import Empty from '@/components/empty/empty'
+  import Deadline from '@/components/deadline/deadline'
 
   export default {
     name: 'index',
@@ -133,6 +135,18 @@
       this.$refs.scrollArea.addEventListener('scroll', this._scroll)
     },
     methods: {
+      search() {
+        window.location.href = window.setting.HTTPURL + 'addons/welife_durian/index.html#/search'
+      },
+      goEssenceList() {
+        window.location.href = window.setting.HTTPURL + 'addons/welife_durian/index.html#/cream'
+      },
+      goDurianDetail(id) {
+        window.location.href = window.setting.HTTPURL + 'addons/welife_durian/index.html#/detail/' + id
+      },
+      goTopicDetail(id) {
+        window.location.href = window.setting.HTTPURL + 'addons/welife_durian/index.html#/topic/' + id
+      },
       chooseTopic(topic) {
         this.activeTopic = topic.id
         if (this.activeTopic !== '-2') {
@@ -199,6 +213,8 @@
       }
     },
     components: {
+      Deadline,
+      Empty,
       DurianItem,
       UniFooter,
       Loading

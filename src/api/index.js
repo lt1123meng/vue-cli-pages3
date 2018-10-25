@@ -1,9 +1,20 @@
 import axios from './axios'
+// 获取城市列表
+export const City = () => {
+  return axios(
+    'get',
+    window.setting.HTTPAPI + 'center/city/list',
+    {
+      by_letter: 1,
+      for_quan_shop: 1
+    }
+  ).then((res) => {
+    res = res.data
+    return Promise.resolve(res)
+  })
+}
 // 首页banner
-// let window = window
-console.log(window)
 export const IndexBanner = () => {
-  console.log(window)
   return axios(
     'get',
     window.setting.HTTPAPI + 'system/config/banner',

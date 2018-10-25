@@ -12,11 +12,68 @@
     left 0
     width 100%
     overflow scroll
+    .address {
+      position absolute
+      top 12px
+      left 12px
+      padding 0 20px
+      height 56px
+      line-height 56px
+      font-size 0
+      background-color rgba(0, 0, 0, 0.5)
+      border-radius 56px
+      z-index 99
+      .text {
+        font-size 28px
+        color #fff
+        vertical-align middle
+      }
+      .icon {
+        width 24px
+        height 24px
+        margin-left 6px
+        vertical-align middle
+      }
+    }
+    .message {
+      position absolute
+      top 12px
+      right 12px
+      width 56px
+      height 56px
+      line-height 56px
+      border-radius 56px
+      z-index 99
+      text-align center
+      background-color rgba(0, 0, 0, 0.5)
+      .icon {
+        width 44px
+        height 44px
+        vertical-align middle
+      }
+      .num{
+        position absolute
+        top -4px
+        right -6px
+        color #fff
+        background-color $red-color
+        font-size 18px
+        line-height 24px
+        height 24px
+        padding 0 8px
+        border-radius 24px
+      }
+    }
     .banner-wrapper {
+      position relative
       height 228px
-      .banner-slide {
-        background-size cover
-        background-position center center
+      font-size 0
+      .banner {
+        height 228px
+        .banner-slide {
+          background-size cover
+          background-position center center
+        }
       }
     }
     .notice-wrapper {
@@ -195,7 +252,7 @@
           color #999999
         }
       }
-      .more-wrapper{
+      .more-wrapper {
         height 120px
         line-height 100px
         text-align center

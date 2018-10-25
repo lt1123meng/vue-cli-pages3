@@ -50,7 +50,8 @@
           <div
             class="img-wrapper"
             v-if="post.img.length!==0&&post.img.length<4"
-            :style="'background-image: url('+_getImg(post.img[0])+')'"
+            :style="'background-image: url('+post.img[0]+')'"
+            @click.stop="preview(post.img[0])"
           >
           </div>
         </div>
@@ -61,13 +62,16 @@
             :key="key"
             v-if="key<4"
           >
-            <div class="img" :style="'background-image: url('+_getImg(item)+')'">
+            <div class="img" @click.stop="preview(item)" :style="'background-image: url('+item+')'">
+            </div>
+            <div class="more" @click.stop="preview(item)" v-if="post.img.length>4&&key==3">
+              <span class="text">+{{post.img.length-3}}</span>
             </div>
           </div>
         </div>
       </div>
       <div class="durian-item-tail-wrapper">
-        <div class="time">{{data.last_comment_time?data.last_comment_time:data.create_at}}</div>
+        <div class="time">{{data.create_at}}</div>
         <div class="bun">{{data.num_view}}人浏览</div>
       </div>
     </div>
@@ -95,7 +99,7 @@
       let content = this.data.content
       for (let i = 0; i < content.length; i++) {
         if (content[i].type + '' === '0') {
-          img.push(content[i].img)
+          img.push(this._getImg(content[i].img))
         } else {
           if (!text) {
             text = content[i].text
@@ -134,7 +138,7 @@
         if (this.data.son.img_list) {
           let imgList = this.data.son.img_list.split(',')
           for (let k = 0; k < imgList.length; k++) {
-            img.push(imgList[k])
+            img.push(this._getImg(imgList[k]))
           }
         }
       }
@@ -151,6 +155,12 @@
       },
       goTopicDetail() {
         window.location.href = window.setting.HTTPURL + 'addons/welife_durian/index.html#/topic/' + this.data.topic_id
+      },
+      preview(url) {
+        window.wx.previewImage({
+          current: url,
+          urls: this.post.img
+        })
       },
       _getImg(url) {
         if (this.data.is_large + '' === '0') {
@@ -325,6 +335,24 @@
               background-size cover
               background-position center center
               border-radius 12px
+            }
+            .more {
+              position absolute
+              top 10px
+              left 10px
+              right 10px
+              bottom 10px
+              line-height: 100%;
+              background rgba(51, 51, 51, 0.40)
+              border-radius 12px
+              font-size 50px
+              color #fff
+              .text {
+                position absolute
+                top 50%
+                left 50%
+                transform translate(-50%, -50%)
+              }
             }
           }
         }

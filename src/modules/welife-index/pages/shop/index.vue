@@ -3,7 +3,7 @@
     <div class="shop-content-wrapper">
       <div class="header-wrapper" :class="{'topnav':topnav}">
         <div class="search-wrapper">
-          <div class="inner-box">
+          <div class="inner-box" @click="search">
             <img class="icon" src="/static/image/icon/icon-search.png">
             <span class="text">商铺名称/关键词</span>
           </div>
@@ -43,7 +43,7 @@
               </swiper-slide>
             </swiper>
             <div class="button-wrapper">
-              <button class="button">我要入驻</button>
+              <button class="button" @click="createShop">我要入驻</button>
             </div>
           </div>
           <nav class="shop-type-wrapper">
@@ -69,12 +69,14 @@
               <span class="text">人气最高</span>
               <div class="line"></div>
             </div>
-            <div class="item-wrapper">
-              <span class="text">地区</span>
+            <div class="item-wrapper" @click="goCity">
+              <span class="text">{{city_name}}</span>
+              <img src="/static/image/icon/icon-solid-triangle-999.png" class="icon">
               <div class="line"></div>
             </div>
           </nav>
-          <loading v-if="shopList===''"></loading>
+          <loading v-if="shopList===''" :flag="shopList===''"></loading>
+          <empty v-else-if="shopList.length===0"></empty>
           <div v-else>
             <div
               v-for="(item,key) in shopList"
@@ -91,21 +93,26 @@
       </div>
     </div>
     <uni-footer></uni-footer>
+    <router-view @cityChange="cityChange"/>
   </div>
 </template>
 
 <script>
   import './index.styl'
+  import {getCookie} from '@/utils/common.js'
   import {ShopChooseType, ShopAD, ShopList} from '@/api/shop.js'
   import Loading from '@/components/loading/loading'
   import UniFooter from '@/components/uni-footer/uni-footer'
   import ShopItem from '@/components/shop-item/shop-item'
   import Deadline from '@/components/deadline/deadline'
+  import Empty from '@/components/empty/empty'
 
   export default {
     name: 'index',
     data() {
       return {
+        city_id: 0,
+        city_name: '地区',
         flag: false,
         finish: false,
         topnav: false,
@@ -128,11 +135,26 @@
       this._initChooseType()
       this._initAD()
       this._initSet()
+      this.city_id = getCookie('city_id_food') || 0
+      this.city_name = getCookie('city_name_food') || '地区'
     },
     mounted() {
       this.$refs.scrollArea.addEventListener('scroll', this._scroll)
     },
     methods: {
+      goCity() {
+        this.$router.push('/shop/city')
+      },
+      search() {
+        window.location.href = window.setting.HTTPURL + 'addons/welife_food/index.html#/search'
+      },
+      createShop() {
+        if (!window.user || window.user.token === '' || !window.user.token) {
+          this.$root.$children[0].loginShow = true
+          return false
+        }
+        window.location.href = window.setting.HTTPURL + 'addons/welife_admin/index.html#/adminupload'
+      },
       getImg(url) {
         return window.setting.CDNStatic + url
       },
@@ -152,6 +174,16 @@
         }
         this._initSet()
       },
+      cityChange(item) {
+        if (item.name === '英国') {
+          this.city_name = '地区'
+          this.city_id = '0'
+        } else {
+          this.city_id = item.id
+          this.city_name = item.name
+        }
+        this._initSet()
+      },
       _scroll(e) {
         if (e.target.scrollTop > 650) {
           this.topnav = true
@@ -165,6 +197,7 @@
       _initSet() {
         this.page = 0
         this.shopList = ''
+        this.finish = false
         this._initShopList()
       },
       _initChooseType() {
@@ -189,7 +222,7 @@
         })
       },
       _initShopList() {
-        if (this.flag || this.postFinish) {
+        if (this.flag || this.finish) {
           return
         }
         this.flag = true
@@ -197,7 +230,7 @@
         let params = {
           page: this.page,
           page_size: 10,
-          city_id: 0,
+          city_id: this.city_id,
           type_id: this.chooseTypeActive,
           sort: this.sortActive,
           keywords: ''
@@ -221,7 +254,8 @@
       Loading,
       Deadline,
       ShopItem,
-      UniFooter
+      UniFooter,
+      Empty
     }
   }
 </script>
