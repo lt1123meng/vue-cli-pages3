@@ -100,6 +100,7 @@
 <script>
   import './index.styl'
   import {getCookie} from '@/utils/common.js'
+  import {Share} from '@/api/index.js'
   import {ShopChooseType, ShopAD, ShopList} from '@/api/shop.js'
   import Loading from '@/components/loading/loading'
   import UniFooter from '@/components/uni-footer/uni-footer'
@@ -131,6 +132,7 @@
       }
     },
     created() {
+      this._initWx()
       this.page = 0
       this._initChooseType()
       this._initAD()
@@ -248,7 +250,33 @@
           }
           this.flag = false
         })
+      },
+      _initWx() {
+        let sharedata = {
+          title: '英国口碑商家',
+          desc: '美食 购物 租房 超市 交通 物流 职业',
+          link: window.location.href + '?share=share',
+          imgUrl: window.setting.CDNStatic + '/addons/common/img/index_Logo_Britain.jpg',
+          success: function () {
+            // 分享帖子接口
+            Share()
+          },
+          cancel: function () {
+          }
+        }
+        setTimeout(function () {
+          window.wx.ready(function () {
+            window.wx.onMenuShareAppMessage(sharedata)
+          })
+          // 分享朋友圈
+          window.wx.ready(function () {
+            window.wx.onMenuShareTimeline(sharedata)
+          })
+        }, 0)
       }
+    },
+    activated() {
+      this._initWx()
     },
     components: {
       Loading,

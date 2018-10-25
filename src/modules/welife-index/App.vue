@@ -15,6 +15,21 @@
         </div>
       </div>
     </div>
+    <div class="follow-tip-wrapper" v-if="follow">
+      <div class="close">
+        <img class="icon" @click.stop="follow=false" src="/static/image/icon/icon-close-circle.png">
+      </div>
+      <div class="logo-wrapper">
+        <img src="/static/image/system/logo-zheng.png" class="icon">
+      </div>
+      <div class="info-wrapper">
+        <p>关注【英国由你】</p>
+        <p>进入全球华人留学生社区</p>
+      </div>
+      <div class="button-wrapper">
+        <button class="button">关注</button>
+      </div>
+    </div>
     <router-view/>
   </div>
 </template>
@@ -38,8 +53,16 @@
     data() {
       return {
         loginShow: false,
-        check: true
+        check: true,
+        follow: false
       }
+    },
+    created() {
+      setTimeout(() => {
+        if (this.$route.query.share) {
+          this.follow = true
+        }
+      }, 500)
     },
     methods: {
       cancel() {
@@ -55,6 +78,7 @@
 </script>
 
 <style lang="stylus">
+  @import "../../stylus/variable.styl"
   .login-tip-wrapper {
     position fixed
     top 0
@@ -128,6 +152,59 @@
             color #ffffff
           }
         }
+      }
+    }
+  }
+
+  .follow-tip-wrapper {
+    position fixed
+    top 0
+    left 0
+    right 0
+    z-index 9999
+    height 100px
+    line-height 100px
+    display flex
+    box-shadow 0 0 20px 0px #eeeeee
+    background-color #ffffff
+    .close {
+      flex 0 0 60px
+      text-align right
+      line-height 100px
+      font-size 0
+      .icon {
+        width 40px
+        height 40px
+        vertical-align middle
+      }
+    }
+    .logo-wrapper {
+      flex 0 0 100px
+      text-align center
+      .icon {
+        width 70px
+        height 70px
+        vertical-align middle
+        border-radius 8px
+      }
+    }
+    .info-wrapper {
+      flex 1
+      padding 18px 10px
+      line-height 32px
+      font-size 20px
+      color #333333
+    }
+    .button-wrapper {
+      flex 0 0 140px
+      text-align center
+      .button {
+        width 100px
+        height 50px
+        background-color $common-color
+        color #fff
+        border-radius 10px
+        font-size 28px
       }
     }
   }

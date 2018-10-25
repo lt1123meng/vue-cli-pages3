@@ -128,7 +128,7 @@
 <script>
   import './index.styl'
   import {getCookie} from '@/utils/common.js'
-  import {IndexBanner, IndexNotice, IndexHot, IndexDurianList, IndexUnreadNumber} from '@/api/index.js'
+  import {Share, IndexBanner, IndexNotice, IndexHot, IndexDurianList, IndexUnreadNumber} from '@/api/index.js'
   import UniFooter from '@/components/uni-footer/uni-footer'
   import DurianItem from '@/components/durian-item/durian-item'
 
@@ -159,6 +159,7 @@
       }
     },
     created() {
+      this._initWx()
       this._initBanner()
       this._initNotice()
       this._initHot()
@@ -254,7 +255,6 @@
       },
       _initUnreadNumber() {
         if (!window.user || window.user.token === '' || !window.user.token) {
-          this.$root.$children[0].loginShow = true
           return false
         }
         IndexUnreadNumber().then((res) => {
@@ -267,11 +267,37 @@
         } else {
           return url
         }
+      },
+      _initWx() {
+        let sharedata = {
+          title: '英国由你|英国最大的华人留学生社区',
+          desc: '玩转英国',
+          link: window.location.href + '?share=share',
+          imgUrl: window.setting.CDNStatic + '/addons/common/img/index_Logo_Britain.jpg',
+          success: function () {
+            // 分享帖子接口
+            Share()
+          },
+          cancel: function () {
+          }
+        }
+        setTimeout(function () {
+          window.wx.ready(function () {
+            window.wx.onMenuShareAppMessage(sharedata)
+          })
+          // 分享朋友圈
+          window.wx.ready(function () {
+            window.wx.onMenuShareTimeline(sharedata)
+          })
+        }, 0)
       }
     },
     components: {
       DurianItem,
       UniFooter
+    },
+    activated() {
+      this._initWx()
     }
   }
 </script>

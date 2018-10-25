@@ -99,6 +99,7 @@
 
 <script>
   import './index.styl'
+  import {Share} from '@/api/index.js'
   import {TopicList} from '@/api/topic.js'
   import {PostList} from '@/api/post.js'
   import UniFooter from '@/components/uni-footer/uni-footer'
@@ -128,6 +129,7 @@
       }
     },
     created() {
+      this._initWx()
       this._initSet()
       this._initTopicList()
     },
@@ -210,7 +212,33 @@
       },
       _getImgUrl(img) {
         return window.setting.CDNImage + img
+      },
+      _initWx() {
+        let sharedata = {
+          title: '英国由你|榴莲圈',
+          desc: '留学生自己的社区',
+          link: window.location.href + '?share=share',
+          imgUrl: window.setting.CDNStatic + '/addons/common/img/index_Logo_Britain.jpg',
+          success: function () {
+            // 分享帖子接口
+            Share()
+          },
+          cancel: function () {
+          }
+        }
+        setTimeout(function () {
+          window.wx.ready(function () {
+            window.wx.onMenuShareAppMessage(sharedata)
+          })
+          // 分享朋友圈
+          window.wx.ready(function () {
+            window.wx.onMenuShareTimeline(sharedata)
+          })
+        }, 0)
       }
+    },
+    activated(){
+      this._initWx()
     },
     components: {
       Deadline,

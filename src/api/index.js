@@ -1,4 +1,17 @@
 import axios from './axios'
+import AXIOS from 'axios'
+// 分享
+export const Share = () => {
+  return AXIOS({
+      url: window.setting.HTTPAPI + 'quan/user/share-post-num',
+      method: 'get',
+      params: {
+        token: sessionStorage.token
+      },
+      responseType: 'json'
+    }
+  )
+}
 // 获取城市列表
 export const City = () => {
   return axios(

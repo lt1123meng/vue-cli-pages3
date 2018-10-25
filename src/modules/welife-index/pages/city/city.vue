@@ -114,7 +114,6 @@
       _initCity() {
         let obj = getCookie('cache_data')
         if (obj.length > 0) {
-          var newstr = ''
           let arr = obj.split(',')
           this.history = arr
         } else {
