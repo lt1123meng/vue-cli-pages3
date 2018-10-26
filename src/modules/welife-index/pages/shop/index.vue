@@ -83,7 +83,7 @@
               v-for="(item,key) in shopList"
               :key="key"
             >
-              <shop-item :data="item"></shop-item>
+              <shop-item @detail="goDetail" :data="item"></shop-item>
             </div>
             <div class="loading-wrapper" v-show="flag">
               <img src="/static/image/system/loading-tail.gif" class="icon">
@@ -133,6 +133,11 @@
       }
     },
     created() {
+      if (sessionStorage.pos) {
+        this.pos = JSON.parse(sessionStorage.pos)
+        this.chooseTypeActive = this.pos.chooseTypeActive
+        this.sortActive = this.pos.sortActive
+      }
       this._initWx()
       this.page = 0
       this._initChooseType()
@@ -147,6 +152,15 @@
     methods: {
       goCity() {
         this.$router.push('/shop/city')
+      },
+      goDetail() {
+        var sessionParams = {
+          chooseTypeActive: this.chooseTypeActive,
+          pos: this.$refs.scrollArea.scrollTop,
+          sortActive: this.sortActive,
+          length: this.shopList.length
+        }
+        sessionStorage.pos = JSON.stringify(sessionParams)
       },
       search() {
         window.location.href = window.setting.HTTPURL + 'addons/welife_food/index.html#/search'
@@ -244,6 +258,9 @@
           sort: this.sortActive,
           keywords: ''
         }
+        if (this.pos) {
+          params.page_size = this.pos.length
+        }
         let time = false
         let http = false
         let httpres = ''
@@ -258,6 +275,15 @@
               this.shopList = this.shopList.concat(httpres.data.list)
             }
           }
+          if (this.pos) {
+            this.$nextTick(() => {
+              setTimeout(() => {
+                this.$refs.scrollArea.scrollTop = this.pos.pos
+                sessionStorage.removeItem('pos')
+                this.pos = ''
+              }, 200)
+            })
+          }
           this.flag = false
           this.$forceUpdate()
         }
@@ -267,7 +293,7 @@
           } else {
             time = true
           }
-        }, 800)
+        }, 200)
         ShopList(params).then((res) => {
           httpres = res
           if (time === true) {

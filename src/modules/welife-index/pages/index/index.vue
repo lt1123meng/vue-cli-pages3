@@ -106,13 +106,13 @@
             <div class="left">榴莲圈</div>
             <div class="right" @click="goDurian">查看更多 ></div>
           </div>
-          <div class="content-wrapper">
+          <div class="content-wrapper" v-if="indexDurianList.length>0">
             <durian-item
-              v-if="indexDurianList.length>0"
               class="item-wrapper"
               v-for="(item,key) in indexDurianList"
               :key="key"
               :data="item"
+              @detail="goDetail"
             >
             </durian-item>
             <div class="more-wrapper" @click="goDurian">
@@ -164,6 +164,9 @@
       }
     },
     created() {
+      if (sessionStorage.pos) {
+        this.pos = JSON.parse(sessionStorage.pos)
+      }
       this._initWx()
       this._initBanner()
       this._initNotice()
@@ -204,7 +207,13 @@
         window.location.href = window.setting.HTTPURL + 'addons/welife_cms/index.html#/detail/2/' + item.id
       },
       goDurian() {
-        window.location.href = window.setting.HTTPURL + 'addons/welife_mine/index.html#/newslist'
+        this.$router.push('/durian')
+      },
+      goDetail() {
+        var sessionParams = {
+          pos: this.$refs.scrollArea.scrollTop
+        }
+        sessionStorage.pos = JSON.stringify(sessionParams)
       },
       goMessage() {
         if (!window.user || window.user.token === '' || !window.user.token) {
@@ -257,6 +266,15 @@
         })
       },
       _initDurianList() {
+        if (this.pos) {
+          this.$nextTick(() => {
+            setTimeout(() => {
+              this.$refs.scrollArea.scrollTop = this.pos.pos
+              sessionStorage.removeItem('pos')
+              this.pos = ''
+            }, 400)
+          })
+        }
         IndexDurianList().then((res) => {
           this.indexDurianList = res.data
         })

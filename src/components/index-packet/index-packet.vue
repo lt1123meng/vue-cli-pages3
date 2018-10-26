@@ -1,5 +1,5 @@
 <template>
-  <div class="index-packet-wrapper">
+  <div class="index-packet-wrapper" v-show="packetShow">
     <img @click="packet" src="/static/image/system/index-packet.gif" class="packet" :class="{'hide':hide}">
     <div class="mast" v-if="mast">
       <div class="image-wrapper">
@@ -24,6 +24,7 @@
     },
     data() {
       return {
+        packetShow: true,
         hide: false,
         mast: false,
         lingqu: 0
@@ -31,6 +32,7 @@
     },
     created() {
       this.time = ''
+      this._initLingqu(true)
     },
     methods: {
       packet() {
@@ -43,17 +45,23 @@
       hideMast() {
         this.mast = false
       },
-      _initLingqu() {
+      _initLingqu(flag) {
         IsIndexPacket().then(
           (res) => {
             console.log(res)
             this.lingqu = res.data.is_gold
-            if (this.lingqu === 0) {
-              PacketAdd().then(() => {
-                this.mast = true
-              })
+            if (flag) {
+              if (this.lingqu === 1) {
+                this.packetShow = false
+              }
             } else {
-              this.mast = true
+              if (this.lingqu === 0) {
+                PacketAdd().then(() => {
+                  this.mast = true
+                })
+              } else {
+                this.mast = true
+              }
             }
           }
         )

@@ -35,6 +35,7 @@
               v-if="postList[activeTopic].list.length>0"
               class="item-wrapper"
               :data="item"
+              @detail="goDetail"
             >
             </durian-item>
             <div class="essence-wrapper" v-if="essence!==''&&key===1">
@@ -131,10 +132,20 @@
       }
     },
     created() {
-      this.postList[this.activeTopic] = {
-        list: '',
-        page: 0,
-        postFinish: false
+      if (sessionStorage.pos) {
+        this.pos = JSON.parse(sessionStorage.pos)
+        this.activeTopic = this.pos.activeTopic
+        this.postList[this.activeTopic] = {
+          list: '',
+          page: 0,
+          postFinish: false
+        }
+      } else {
+        this.postList[this.activeTopic] = {
+          list: '',
+          page: 0,
+          postFinish: false
+        }
       }
       this._initWx()
       this._initSet()
@@ -150,8 +161,13 @@
       goEssenceList() {
         window.location.href = window.setting.HTTPURL + 'addons/welife_durian/index.html#/cream'
       },
-      goDurianDetail(id) {
-        window.location.href = window.setting.HTTPURL + 'addons/welife_durian/index.html#/detail/' + id
+      goDetail() {
+        var sessionParams = {
+          length: this.postList[this.activeTopic].list.length,
+          pos: this.$refs.scrollArea.scrollTop,
+          activeTopic: this.activeTopic
+        }
+        sessionStorage.pos = JSON.stringify(sessionParams)
       },
       goTopicDetail(id) {
         window.location.href = window.setting.HTTPURL + 'addons/welife_durian/index.html#/topic/' + id
@@ -224,6 +240,15 @@
               this.essence = httpres.data.essence
             }
           }
+          if (this.pos) {
+            this.$nextTick(() => {
+              setTimeout(() => {
+                this.$refs.scrollArea.scrollTop = this.pos.pos
+                sessionStorage.removeItem('pos')
+                this.pos = ''
+              }, 200)
+            })
+          }
           this.flag = false
           this.$forceUpdate()
         }
@@ -233,8 +258,12 @@
           } else {
             time = true
           }
-        }, 800)
-        PostList(this.activeTopic, this.postList[this.activeTopic].page).then((res) => {
+        }, 200)
+        let size = 10
+        if (this.pos) {
+          size = this.pos.length
+        }
+        PostList(this.activeTopic, this.postList[this.activeTopic].page, size).then((res) => {
           httpres = res
           if (time === true) {
             setData()

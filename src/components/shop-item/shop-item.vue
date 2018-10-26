@@ -54,6 +54,7 @@
         window.location.href = 'tel:' + this.data.tel
       },
       goShopDetail() {
+        this.$emit('detail')
         this.click = true
         setTimeout(() => {
           this.click = false

@@ -1,6 +1,7 @@
 <template>
   <div class="loading-outer-wrapper">
-    <img class="icon" :class="{'logo':!flag}" :src="src">
+    <img class="icon logo" :class="{'logo':!flag}" :src="src">
+    <p class="text">加载中...</p>
   </div>
 </template>
 
@@ -15,11 +16,11 @@
     },
     computed: {
       src() {
-        if (this.flag) {
-          return '/static/image/system/loading-center.gif'
-        } else {
+        // if (this.flag) {
+        //   return '/static/image/system/loading-center.gif'
+        // } else {
           return '/static/image/system/logo-zheng.png'
-        }
+        // }
       }
     }
     // data() {
@@ -62,6 +63,11 @@
         margin-top 280px
         width 100px
       }
+    }
+    .text{
+      color #666
+      font-size 28px
+      margin-top 20px
     }
   }
 </style>

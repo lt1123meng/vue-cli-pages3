@@ -153,6 +153,7 @@
     },
     methods: {
       goDurianDetail() {
+        this.$emit('detail')
         this.click = true
         setTimeout(() => {
           this.click = false
