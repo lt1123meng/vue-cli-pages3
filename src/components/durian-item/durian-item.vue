@@ -1,6 +1,6 @@
 <template>
   <div class="durian-item-wrapper" @click="goDurianDetail">
-    <div class="durian-item-box">
+    <div class="durian-item-box" :class="{'click':click}">
       <div class="durian-item-head-wrapper">
         <div class="avatar-wrapper">
           <img class="avatar" :src="data.avatar" alt="">
@@ -75,6 +75,7 @@
         <div class="bun">{{data.num_view}}人浏览</div>
       </div>
     </div>
+    <div class="line"></div>
   </div>
 </template>
 
@@ -88,7 +89,8 @@
     },
     data() {
       return {
-        post: ''
+        post: '',
+        click: false
       }
     },
     mounted() {
@@ -151,7 +153,11 @@
     },
     methods: {
       goDurianDetail() {
-        window.location.href = window.setting.HTTPURL + 'addons/welife_durian/index.html#/detail/' + this.data.id
+        this.click = true
+        setTimeout(() => {
+          this.click = false
+          window.location.href = window.setting.HTTPURL + 'addons/welife_durian/index.html#/detail/' + this.data.id
+        }, 250)
       },
       goTopicDetail() {
         window.location.href = window.setting.HTTPURL + 'addons/welife_durian/index.html#/topic/' + this.data.topic_id
@@ -190,11 +196,18 @@
 <style scoped lang="stylus">
   @import "../../stylus/variable.styl"
   .durian-item-wrapper {
-    padding 0 30px
     background-color #fff
-    .durian-item-box {
-      padding 30px 0
+    .line {
+      margin 0 auto
+      width 690px
       border-bottom 2px dashed #eeeeee
+    }
+    .durian-item-box {
+      padding 30px
+      &.click {
+        background-color #f3f3f3
+        box-shadow 0 0 80px 10px #fff inset
+      }
       .durian-item-head-wrapper {
         display flex
         .avatar-wrapper {

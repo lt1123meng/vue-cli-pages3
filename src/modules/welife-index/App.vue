@@ -27,7 +27,7 @@
         <p>进入全球华人留学生社区</p>
       </div>
       <div class="button-wrapper">
-        <button class="button">关注</button>
+        <button @click="goFollow" class="button">关注</button>
       </div>
     </div>
     <router-view/>
@@ -65,6 +65,9 @@
       }, 500)
     },
     methods: {
+      goFollow() {
+        window.location.href = 'https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzI1OTcwNzEzNw==&scene=124#wechat_redirect'
+      },
       cancel() {
         this.loginShow = false
         this.check = true

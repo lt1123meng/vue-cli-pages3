@@ -75,7 +75,8 @@
               <div class="line"></div>
             </div>
           </nav>
-          <loading v-if="shopList===''" :flag="shopList===''"></loading>
+          <loading v-show="shopList===''" :flag="shopList===''"></loading>
+          <div v-if="shopList===''"></div>
           <empty v-else-if="shopList.length===0"></empty>
           <div v-else>
             <div
@@ -136,9 +137,9 @@
       this.page = 0
       this._initChooseType()
       this._initAD()
-      this._initSet()
       this.city_id = getCookie('city_id_food') || 0
       this.city_name = getCookie('city_name_food') || '地区'
+      this._initSet()
     },
     mounted() {
       this.$refs.scrollArea.addEventListener('scroll', this._scroll)
@@ -161,6 +162,9 @@
         return window.setting.CDNStatic + url
       },
       chooseOneType(item) {
+        if (this.flag) {
+          return
+        }
         if (this.chooseTypeActive === item.id) {
           this.chooseTypeActive = ''
         } else {
@@ -169,6 +173,9 @@
         this._initSet()
       },
       sortChoose(type) {
+        if (this.flag) {
+          return
+        }
         if (this.sortActive === type) {
 
         } else {
@@ -237,18 +244,37 @@
           sort: this.sortActive,
           keywords: ''
         }
-        ShopList(params).then((res) => {
-          if (res.status) {
-            if (res.data.list.length !== 10) {
+        let time = false
+        let http = false
+        let httpres = ''
+        let setData = () => {
+          if (httpres.status) {
+            if (httpres.data.list.length !== 10) {
               this.finish = true
             }
             if (this.shopList === '') {
-              this.shopList = res.data.list
+              this.shopList = httpres.data.list
             } else {
-              this.shopList = this.shopList.concat(res.data.list)
+              this.shopList = this.shopList.concat(httpres.data.list)
             }
           }
           this.flag = false
+          this.$forceUpdate()
+        }
+        setTimeout(() => {
+          if (http === true) {
+            setData()
+          } else {
+            time = true
+          }
+        }, 800)
+        ShopList(params).then((res) => {
+          httpres = res
+          if (time === true) {
+            setData()
+          } else {
+            http = true
+          }
         })
       },
       _initWx() {
@@ -256,7 +282,7 @@
           title: '英国口碑商家',
           desc: '美食 购物 租房 超市 交通 物流 职业',
           link: window.location.href + '?share=share',
-          imgUrl: window.setting.CDNStatic + '/addons/common/img/index_Logo_Britain.jpg',
+          imgUrl: window.setting.HTTPVUE + 'static/image/system/sellerShareImg.png',
           success: function () {
             // 分享帖子接口
             Share()

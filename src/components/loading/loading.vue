@@ -22,6 +22,32 @@
         }
       }
     }
+    // data() {
+    //   return {
+    //     src: '/static/image/system/loading-center.gif',
+    //     flag: false
+    //   }
+    // },
+    // created() {
+    //   console.log('created')
+    //   this.src = '/static/image/system/loading-center.gif'
+    //   this.flag = false
+    // },
+    // activated() {
+    //   console.log('activated')
+    //   this.src = '/static/image/system/loading-center.gif'
+    //   this.flag = false
+    // },
+    // deactivated() {
+    //   console.log('deactivated')
+    //   this.src = '/static/image/system/logo-zheng.png'
+    //   this.flag = true
+    // },
+    // destroyed() {
+    //   console.log('destroyed')
+    //   this.src = '/static/image/system/logo-zheng.png'
+    //   this.flag = true
+    // }
   }
 </script>
 

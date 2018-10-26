@@ -1,6 +1,6 @@
 <template>
   <div class="shop-item-wrapper">
-    <div class="shop-item-box" @click="goShopDetail">
+    <div class="shop-item-box" :class="{'click':click}" @click="goShopDetail">
       <div class="avatar-wrapper">
         <div class="avatar" :style="'background-image: url('+_getImg(data.logo)+')'"></div>
         <img class="tag" v-if="data.is_licence" src="/static/image/icon/user-v.png">
@@ -42,7 +42,8 @@
     },
     data() {
       return {
-        post: ''
+        post: '',
+        click: false
       }
     },
     mounted() {
@@ -53,7 +54,11 @@
         window.location.href = 'tel:' + this.data.tel
       },
       goShopDetail() {
-        window.location.href = window.setting.HTTPURL + 'addons/welife_food/index.html#/shopingdetail/' + this.data.id
+        this.click = true
+        setTimeout(() => {
+          this.click = false
+          window.location.href = window.setting.HTTPURL + 'addons/welife_food/index.html#/shopingdetail/' + this.data.id
+        }, 250)
       },
       _getImg(url) {
         return window.setting.CDNImage + url
@@ -65,11 +70,14 @@
 <style scoped lang="stylus">
   @import "../../stylus/variable.styl"
   .shop-item-wrapper {
-    padding 0 30px
     background-color #fff
     .shop-item-box {
-      padding 30px 0
+      padding 30px
       display flex
+      &.click {
+        background-color #f3f3f3
+        box-shadow 0 0 80px 10px #fff inset
+      }
       .avatar-wrapper {
         position relative
         flex 0 0 120px

@@ -22,15 +22,17 @@
         </div>
       </div>
       <div class="content-wrapper post" v-if="activeTopic!=='-2'" ref="scrollArea">
-        <loading v-if="postList===''" :flag="postList===''"></loading>
-        <empty v-else-if="postList.length==0"></empty>
+        <loading v-show="!postList[activeTopic]||postList[activeTopic].list===''"
+                 :flag="postList[activeTopic].list===''"></loading>
+        <div v-if="!postList[activeTopic].list||postList[activeTopic].list===''"></div>
+        <empty v-else-if="postList[activeTopic].list.length==0"></empty>
         <div v-else>
           <div
-            v-for="(item,key) in postList"
+            v-for="(item,key) in postList[activeTopic].list"
             :key="key"
           >
             <durian-item
-              v-if="postList.length>0"
+              v-if="postList[activeTopic].list.length>0"
               class="item-wrapper"
               :data="item"
             >
@@ -60,11 +62,11 @@
           <div class="loading-wrapper" v-show="flag">
             <img src="/static/image/system/loading-tail.gif" class="icon">
           </div>
-          <deadline v-if="postFinish"></deadline>
+          <deadline v-if="postList[activeTopic].postFinish"></deadline>
         </div>
       </div>
       <div class="content-wrapper topic" v-else>
-        <loading v-if="postList===''"></loading>
+        <loading v-if="topicList===''"></loading>
         <div v-else>
           <div
             class="topic-wrapper"
@@ -123,12 +125,17 @@
         }],
         topicList: '',
         essence: '',
-        postList: '',
+        postList: {},
         flag: false,
         postFinish: false
       }
     },
     created() {
+      this.postList[this.activeTopic] = {
+        list: '',
+        page: 0,
+        postFinish: false
+      }
       this._initWx()
       this._initSet()
       this._initTopicList()
@@ -150,9 +157,19 @@
         window.location.href = window.setting.HTTPURL + 'addons/welife_durian/index.html#/topic/' + id
       },
       chooseTopic(topic) {
+        if (this.flag) {
+          return
+        }
         this.activeTopic = topic.id
-        if (this.activeTopic !== '-2') {
+        if (!this.postList[this.activeTopic]) {
+          this.postList[this.activeTopic] = {
+            list: '',
+            page: 0,
+            postFinish: false
+          }
           this._initSet()
+        }
+        if (this.activeTopic !== '-2') {
         } else {
           if (this.topicList === '') {
             this._initTopicList(3)
@@ -160,9 +177,6 @@
         }
       },
       _initSet() {
-        this.postFinish = false
-        this.postList = ''
-        this.page = 0
         this.flag = false
         this._initPostList()
       },
@@ -188,26 +202,45 @@
         })
       },
       _initPostList() {
-        if (this.flag || this.postFinish) {
+        if (this.flag || this.postList[this.activeTopic].postFinish) {
           return
         }
         this.flag = true
-        this.page++
-        PostList(this.activeTopic, this.page).then((res) => {
-          if (res.status) {
-            if (res.data.post.length !== 10) {
-              this.postFinish = true
+        this.postList[this.activeTopic].page++
+        let time = false
+        let http = false
+        let httpres = ''
+        let setData = () => {
+          if (httpres.status) {
+            if (httpres.data.post.length !== 10) {
+              this.postList[this.activeTopic].postFinish = true
             }
-            if (this.postList === '') {
-              this.postList = res.data.post
+            if (this.postList[this.activeTopic].list === '') {
+              this.postList[this.activeTopic].list = httpres.data.post
             } else {
-              this.postList = this.postList.concat(res.data.post)
+              this.postList[this.activeTopic].list = this.postList[this.activeTopic].list.concat(httpres.data.post)
             }
-            if (this.activeTopic === '-1' && this.page === 1) {
-              this.essence = res.data.essence
+            if (this.activeTopic === '-1' && this.postList[this.activeTopic].page === 1) {
+              this.essence = httpres.data.essence
             }
           }
           this.flag = false
+          this.$forceUpdate()
+        }
+        setTimeout(() => {
+          if (http === true) {
+            setData()
+          } else {
+            time = true
+          }
+        }, 800)
+        PostList(this.activeTopic, this.postList[this.activeTopic].page).then((res) => {
+          httpres = res
+          if (time === true) {
+            setData()
+          } else {
+            http = true
+          }
         })
       },
       _getImgUrl(img) {
@@ -218,7 +251,7 @@
           title: '英国由你|榴莲圈',
           desc: '留学生自己的社区',
           link: window.location.href + '?share=share',
-          imgUrl: window.setting.CDNStatic + '/addons/common/img/index_Logo_Britain.jpg',
+          imgUrl: window.setting.HTTPVUE + 'static/image/system/durianShareImg.png',
           success: function () {
             // 分享帖子接口
             Share()
@@ -237,7 +270,7 @@
         }, 0)
       }
     },
-    activated(){
+    activated() {
       this._initWx()
     },
     components: {
