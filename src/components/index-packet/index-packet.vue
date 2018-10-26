@@ -31,14 +31,6 @@
     },
     created() {
       this.time = ''
-      if (sessionStorage.token) {
-        IsIndexPacket().then(
-          (res) => {
-            console.log(res)
-            this.lingqu = res.data.is_gold
-          }
-        )
-      }
     },
     methods: {
       packet() {
@@ -46,16 +38,25 @@
           this.$root.$children[0].loginShow = true
           return false
         }
-        if (this.lingqu === 0) {
-          PacketAdd().then(() => {
-            this.mast = true
-          })
-        } else {
-          this.mast = true
-        }
+        this._initLingqu()
       },
       hideMast() {
         this.mast = false
+      },
+      _initLingqu() {
+        IsIndexPacket().then(
+          (res) => {
+            console.log(res)
+            this.lingqu = res.data.is_gold
+            if (this.lingqu === 0) {
+              PacketAdd().then(() => {
+                this.mast = true
+              })
+            } else {
+              this.mast = true
+            }
+          }
+        )
       }
     },
     watch: {
